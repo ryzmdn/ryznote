@@ -142,13 +142,13 @@ function HighlightQuery({
       {parts.map((part) =>
         part.toLowerCase() === query.toLowerCase() ? (
           <mark
-            key={`highlight-${crypto.randomUUID()}`}
+            key={`highlight-${part}`}
             className="bg-transparent text-blue-500 underline"
           >
             {part}
           </mark>
         ) : (
-          <span key={`text-${crypto.randomUUID()}`}>{part}</span>
+          <span key={`text-${part}`}>{part}</span>
         )
       )}
     </>
