@@ -40,6 +40,8 @@ function useWordPressSearch({ close }: { close: () => void }) {
     status: SearchStatus.Idle,
   });
 
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
+
   const fetchResults = useCallback(async (query: string) => {
     if (!query || query.length < 2) {
       setSearchState((prev) => ({ 
@@ -85,9 +87,25 @@ function useWordPressSearch({ close }: { close: () => void }) {
       const query = event.target.value;
       setSearchState((prev) => ({ ...prev, query }));
       fetchResults(query);
+
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+
+      debounceTimeout.current = setTimeout(() => {
+        fetchResults(query);
+      }, 300);
     },
     [fetchResults]
   );
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+    };
+  }, []);
 
   const navigateToPost = useCallback(
     (post: Post) => {
