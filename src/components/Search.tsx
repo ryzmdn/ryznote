@@ -138,16 +138,16 @@ function HighlightQuery({
 
   return (
     <>
-      {parts.map((part) =>
+      {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
           <mark
-            key={`highlight-${part}`}
+            key={`highlight-${index}`}
             className="bg-transparent text-blue-500 underline"
           >
             {part}
           </mark>
         ) : (
-          <span key={`text-${part}`}>{part}</span>
+          <span key={`text-${index}`}>{part}</span>
         )
       )}
     </>
