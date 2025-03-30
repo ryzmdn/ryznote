@@ -39,7 +39,7 @@ function useWordPressSearch({ close }: { close: () => void }) {
     isOpen: false,
     status: SearchStatus.Idle,
   });
-
+  
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const fetchResults = useCallback(async (query: string) => {
@@ -86,12 +86,11 @@ function useWordPressSearch({ close }: { close: () => void }) {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const query = event.target.value;
       setSearchState((prev) => ({ ...prev, query }));
-      fetchResults(query);
-
+      
       if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);
       }
-
+      
       debounceTimeout.current = setTimeout(() => {
         fetchResults(query);
       }, 300);
@@ -166,9 +165,12 @@ function SearchResult({
   query: string;
   onSelect: (post: Post) => void;
 }>) {
-  const cleanTitle = stripHtml(post.title.rendered);
-  const cleanExcerpt = stripHtml(post.excerpt.rendered).substring(0, 100) +
-    (post.excerpt.rendered.length > 100 ? "..." : "");
+  const title = post.title?.rendered || '';
+  const excerpt = post.excerpt?.rendered || '';
+  
+  const cleanTitle = stripHtml(title);
+  const cleanExcerpt = stripHtml(excerpt).substring(0, 100) +
+    (excerpt.length > 100 ? "..." : "");
 
   return (
     <li
@@ -185,12 +187,14 @@ function SearchResult({
         <div className="text-sm font-medium text-gray-900 group-hover:text-blue-500 dark:text-gray-100">
           <HighlightQuery text={cleanTitle} query={query} />
         </div>
-        <Time
-          className="mt-1 text-xs text-gray-500"
-          date={new Date(post.date).toLocaleDateString()}
-        >
-          {formatDate(new Date(post.date).toLocaleDateString())}
-        </Time>
+        {post.date && (
+          <Time
+            className="mt-1 text-xs text-gray-500"
+            date={new Date(post.date).toLocaleDateString()}
+          >
+            {formatDate(new Date(post.date).toLocaleDateString())}
+          </Time>
+        )}
         <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
           <HighlightQuery text={cleanExcerpt} query={query} />
         </div>
@@ -257,11 +261,15 @@ function SearchResults({
     );
   }
 
+  if (!Array.isArray(results)) {
+    return null;
+  }
+
   return (
     <ul>
       {results.map((post, index) => (
         <SearchResult
-          key={post.id}
+          key={post.id || index}
           post={post}
           resultIndex={index}
           query={query}
@@ -362,7 +370,9 @@ function SearchDialog({
   const pathname = usePathname();
 
   useEffect(() => {
-    setOpen(false);
+    if (pathname) {
+      setOpen(false);
+    }
   }, [pathname, setOpen]);
 
   useEffect(() => {
@@ -384,9 +394,49 @@ function SearchDialog({
     setSearchState((prev) => ({ 
       ...prev, 
       query: "", 
-      results: [] 
+      results: [],
+      status: SearchStatus.Idle
     }));
   };
+
+  const [hasError, setHasError] = useState<boolean>(false);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [open]);
+
+  if (hasError) {
+    return (
+      <div className={clss(
+        open ? "block" : "hidden", 
+        "fixed inset-0 z-50", 
+        className
+      )}>
+        <button
+          className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
+          onClick={handleClose}
+          aria-label="Close search dialog"
+        />
+        <div className="fixed inset-0 z-50 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
+          <div className="mx-auto transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 sm:max-w-xl dark:bg-gray-900 dark:ring-gray-800 p-6 text-center">
+            <p className="text-red-600 dark:text-red-400">
+              Something went wrong. Please try again.
+            </p>
+            <Button 
+              variant="default" 
+              className="mt-4"
+              onClick={() => {
+                setHasError(false);
+                handleClose();
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={clss(
@@ -394,15 +444,18 @@ function SearchDialog({
       "fixed inset-0 z-50", 
       className
     )}>
-        <button
-          className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
-          onClick={handleClose}
-          aria-label="Close search dialog"
-        />
+      <button
+        className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
+        onClick={handleClose}
+        aria-label="Close search dialog"
+      />
 
       <div className="fixed inset-0 z-50 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
         <div className="mx-auto transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:max-w-xl dark:bg-gray-900 dark:ring-gray-800">
-          <form ref={formRef} onSubmit={(event) => event.preventDefault()}>
+          <form 
+            ref={formRef} 
+            onSubmit={(event) => event.preventDefault()}
+          >
             <SearchInput
               ref={inputRef}
               searchState={searchState}
