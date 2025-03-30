@@ -28,7 +28,7 @@ export default async function Collections() {
     .map((category) => ({
       name: category.name,
       href: `/blog/category/${category.slug}?page=1`,
-      members: category.count,
+      postCount: category.count,
     }));
 
   return (
@@ -36,7 +36,7 @@ export default async function Collections() {
       {mappedPosts.length > 0 ? (
         <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
           {mappedPosts
-            .toSorted((a, b) => b.members - a.members)
+            .toSorted((a, b) => b.postCount - a.postCount)
             .map((post) => (
               <li
                 key={post.name}
@@ -55,7 +55,7 @@ export default async function Collections() {
                     {post.name.replace(/-/gi, " ")}
                   </Button>
                   <p className="text-gray-700 dark:text-gray-300">
-                    {post.members} Post{post.members > 1 ? "s" : ""}
+                    {post.postCount} Post{post.postCount > 1 ? "s" : ""}
                   </p>
                 </div>
               </li>
