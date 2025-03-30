@@ -74,7 +74,7 @@ export default async function CategoryPage({
 }: Readonly<{ params: Params; searchParams: SearchParams }>) {
   const { slug } = await params;
   const { page } = await searchParams;
-  const tagName = decodeURIComponent(slug.replace(/-/gi, " "));
+  const tagName = decodeURIComponent(slug);
   const currentPage = parseInt(page || "1", 10);
   
   const { posts, totalPages } = await getPostsByCategory(tagName, currentPage);

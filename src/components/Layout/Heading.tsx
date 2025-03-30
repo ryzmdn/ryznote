@@ -43,7 +43,7 @@ export async function Heading() {
         </div>
       </div>
       <div className="text-center">
-        <h1 className="text-5xl font-medium tracking-tight text-balance text-gray-900 dark:text-gray-100 md:text-6xl">
+        <h1 className="text-4xl font-medium tracking-tight text-balance text-gray-900 dark:text-gray-100 sm:text-5xl lg:text-6xl">
           From Local Starting Points, Towards Global Horizons
         </h1>
 
@@ -60,7 +60,7 @@ export async function Heading() {
                 aria-hidden="true"
               />
               
-              <div className="flex flex-wrap justify-evenly items-center gap-5 order-last w-full sm:gap-x-5 sm:gap-y-0 sm:order-none sm:w-auto md:justify-center lg:flex-nowrap">
+              <div className="flex flex-wrap justify-evenly items-center gap-x-4 gap-y-3 order-last w-full sm:gap-x-5 sm:gap-y-4 sm:order-none sm:w-auto md:justify-center lg:flex-nowrap">
                 <Button
                   variant="link"
                   href="/blog/category/all?page=1"

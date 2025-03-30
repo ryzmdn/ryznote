@@ -121,7 +121,7 @@ export default async function Content({
       <div className="mx-auto max-w-2xl text-base text-gray-700 dark:text-gray-300 py-10">
         <header id={`header-${post.title.rendered.replace(/ /gi, "-").toLowerCase()}`} className="w-full h-max">
           <div className="flex justify-between items-center w-full mb-6">
-            <div className="flex items-center gap-x-2 w-full">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 w-full">
               <Badge
                 title={`Category ${
                   category
@@ -178,7 +178,7 @@ export default async function Content({
           className="blog-content prose dark:prose-invert space-y-6"
         />
 
-        <footer className="flex flex-wrap gap-x-3 my-7">
+        <footer className="flex flex-wrap gap-x-2 gap-y-1.5 my-7">
           {tags.map((tag) => (
             <Badge
               key={tag}

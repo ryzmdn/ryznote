@@ -45,7 +45,7 @@ export default function About() {
                   <p>Blogger & Web Developer</p>
                 </li>
                 <li className="mt-6">
-                  <ul className="flex flex-wrap justify-center gap-3 w-full lg:flex-col lg:justify-start">
+                  <ul className="flex flex-wrap justify-center gap-x-3 gap-y-2 w-full lg:flex-col lg:justify-start">
                     {socialIcons.map((social) => (
                       <li key={social.name}>
                         <Button

@@ -39,6 +39,8 @@ function useWordPressSearch({ close }: { close: () => void }) {
     isOpen: false,
     status: SearchStatus.Idle,
   });
+  
+  const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const fetchResults = useCallback(async (query: string) => {
     if (!query || query.length < 2) {
@@ -84,10 +86,25 @@ function useWordPressSearch({ close }: { close: () => void }) {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const query = event.target.value;
       setSearchState((prev) => ({ ...prev, query }));
-      fetchResults(query);
+      
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+      
+      debounceTimeout.current = setTimeout(() => {
+        fetchResults(query);
+      }, 300);
     },
     [fetchResults]
   );
+
+  useEffect(() => {
+    return () => {
+      if (debounceTimeout.current) {
+        clearTimeout(debounceTimeout.current);
+      }
+    };
+  }, []);
 
   const navigateToPost = useCallback(
     (post: Post) => {
@@ -121,16 +138,16 @@ function HighlightQuery({
 
   return (
     <>
-      {parts.map((part) =>
+      {parts.map((part, index) =>
         part.toLowerCase() === query.toLowerCase() ? (
           <mark
-            key={`highlight-${crypto.randomUUID()}`}
+            key={`highlight-${index}`}
             className="bg-transparent text-blue-500 underline"
           >
             {part}
           </mark>
         ) : (
-          <span key={`text-${crypto.randomUUID()}`}>{part}</span>
+          <span key={`text-${index}`}>{part}</span>
         )
       )}
     </>
@@ -148,9 +165,12 @@ function SearchResult({
   query: string;
   onSelect: (post: Post) => void;
 }>) {
-  const cleanTitle = stripHtml(post.title.rendered);
-  const cleanExcerpt = stripHtml(post.excerpt.rendered).substring(0, 100) +
-    (post.excerpt.rendered.length > 100 ? "..." : "");
+  const title = post.title?.rendered || '';
+  const excerpt = post.excerpt?.rendered || '';
+  
+  const cleanTitle = stripHtml(title);
+  const cleanExcerpt = stripHtml(excerpt).substring(0, 100) +
+    (excerpt.length > 100 ? "..." : "");
 
   return (
     <li
@@ -167,12 +187,14 @@ function SearchResult({
         <div className="text-sm font-medium text-gray-900 group-hover:text-blue-500 dark:text-gray-100">
           <HighlightQuery text={cleanTitle} query={query} />
         </div>
-        <Time
-          className="mt-1 text-xs text-gray-500"
-          date={new Date(post.date).toLocaleDateString()}
-        >
-          {formatDate(new Date(post.date).toLocaleDateString())}
-        </Time>
+        {post.date && (
+          <Time
+            className="mt-1 text-xs text-gray-500"
+            date={new Date(post.date).toLocaleDateString()}
+          >
+            {formatDate(new Date(post.date).toLocaleDateString())}
+          </Time>
+        )}
         <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
           <HighlightQuery text={cleanExcerpt} query={query} />
         </div>
@@ -239,11 +261,15 @@ function SearchResults({
     );
   }
 
+  if (!Array.isArray(results)) {
+    return null;
+  }
+
   return (
     <ul>
       {results.map((post, index) => (
         <SearchResult
-          key={post.id}
+          key={post.id || index}
           post={post}
           resultIndex={index}
           query={query}
@@ -266,8 +292,8 @@ const SearchInput = forwardRef<
     <div className="group relative flex h-12">
       <Svg
         variant="outline"
-        width={18}
-        height={18}
+        width={16}
+        height={16}
         draw={[
           "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z",
         ]}
@@ -281,7 +307,7 @@ const SearchInput = forwardRef<
         type="search"
         data-autofocus
         className={clss(
-          "flex-auto appearance-none bg-transparent pl-10 text-gray-700 dark:text-gray-300 outline-none placeholder:text-gray-500 focus:w-full focus:flex-none sm:text-sm",
+          "flex-auto text-sm/6 appearance-none bg-transparent pl-10 text-gray-700 dark:text-gray-300 outline-none placeholder:text-gray-500 focus:w-full focus:flex-none",
           searchState.status === SearchStatus.Loading ? "pr-11" : "pr-4"
         )}
         placeholder="Search blog posts..."
@@ -344,7 +370,9 @@ function SearchDialog({
   const pathname = usePathname();
 
   useEffect(() => {
-    setOpen(false);
+    if (pathname) {
+      setOpen(false);
+    }
   }, [pathname, setOpen]);
 
   useEffect(() => {
@@ -366,9 +394,49 @@ function SearchDialog({
     setSearchState((prev) => ({ 
       ...prev, 
       query: "", 
-      results: [] 
+      results: [],
+      status: SearchStatus.Idle
     }));
   };
+
+  const [hasError, setHasError] = useState<boolean>(false);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [open]);
+
+  if (hasError) {
+    return (
+      <div className={clss(
+        open ? "block" : "hidden", 
+        "fixed inset-0 z-50", 
+        className
+      )}>
+        <button
+          className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
+          onClick={handleClose}
+          aria-label="Close search dialog"
+        />
+        <div className="fixed inset-0 z-50 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
+          <div className="mx-auto transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 sm:max-w-xl dark:bg-gray-900 dark:ring-gray-800 p-6 text-center">
+            <p className="text-red-600 dark:text-red-400">
+              Something went wrong. Please try again.
+            </p>
+            <Button 
+              variant="default" 
+              className="mt-4"
+              onClick={() => {
+                setHasError(false);
+                handleClose();
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={clss(
@@ -376,15 +444,18 @@ function SearchDialog({
       "fixed inset-0 z-50", 
       className
     )}>
-        <button
-          className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
-          onClick={handleClose}
-          aria-label="Close search dialog"
-        />
+      <button
+        className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
+        onClick={handleClose}
+        aria-label="Close search dialog"
+      />
 
-      <div className="fixed inset-0 z-50 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
+      <div className="fixed inset-y-0 inset-x-1/2 -translate-x-1/2 z-50 w-full h-max overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
         <div className="mx-auto transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 data-[closed]:scale-95 data-[closed]:opacity-0 data-[enter]:duration-300 data-[leave]:duration-200 data-[enter]:ease-out data-[leave]:ease-in sm:max-w-xl dark:bg-gray-900 dark:ring-gray-800">
-          <form ref={formRef} onSubmit={(event) => event.preventDefault()}>
+          <form 
+            ref={formRef} 
+            onSubmit={(event) => event.preventDefault()}
+          >
             <SearchInput
               ref={inputRef}
               searchState={searchState}
@@ -450,25 +521,25 @@ export function Search() {
     <div className="block max-w-xl mx-auto my-7">
       <Button
         variant="default"
-        className="flex items-center rounded-md w-full bg-gray-50 dark:bg-gray-950 px-3.5 py-3 font-normal text-gray-600 dark:text-gray-400 ring-1 ring-gray-500/20 dark:ring-gray-400/20 ring-inset"
+        className="flex items-center text-sm rounded-md w-full bg-gray-50 dark:bg-gray-950 px-3.5 py-3 font-normal text-gray-600 dark:text-gray-400 ring-1 ring-gray-500/20 dark:ring-gray-400/20 ring-inset"
         {...buttonProps}
       >
         <Svg
           variant="outline"
-          width={18}
-          height={18}
+          width={16}
+          height={16}
           draw={[
             "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z",
           ]}
         />
         <div className="flex-1 text-start ml-1.5">Search blog posts...</div>
-        <kbd className="inline-flex items-center rounded-sm space-x-1.5 border border-gray-300 dark:border-gray-700 font-mono text-sm text-gray-600 dark:text-gray-400 px-1.5 py-0.5">
+        <kbd className="inline-flex items-center rounded-sm space-x-1.5 border border-gray-300 dark:border-gray-700 font-mono text-xs text-gray-600 dark:text-gray-400 px-1.5 py-0.5">
           <kbd>{modifierKey}</kbd>
           <kbd>K</kbd>
         </kbd>
       </Button>
       <Suspense fallback={null}>
-        <SearchDialog className="block" {...dialogProps} />
+        <SearchDialog {...dialogProps} />
       </Suspense>
     </div>
   );
