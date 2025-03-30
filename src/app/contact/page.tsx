@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Contact() {
   return (
     <div className="text-center mx-auto w-max rounded-2xl bg-gray-100 dark:bg-gray-900 p-10">
-      <h3 className="text-xl font-semibold text-gray-900 sm:text-2xl">
+      <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 sm:text-2xl">
         Contact on Email
       </h3>
       <Button
