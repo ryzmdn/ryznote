@@ -43,7 +43,7 @@ export async function Heading() {
         </div>
       </div>
       <div className="text-center">
-        <h1 className="text-5xl font-medium tracking-tight text-balance text-gray-900 dark:text-gray-100 md:text-6xl">
+        <h1 className="text-4xl font-medium tracking-tight text-balance text-gray-900 dark:text-gray-100 sm:text-5xl lg:text-6xl">
           From Local Starting Points, Towards Global Horizons
         </h1>
 
