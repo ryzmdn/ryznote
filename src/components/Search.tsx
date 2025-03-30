@@ -521,19 +521,19 @@ export function Search() {
     <div className="block max-w-xl mx-auto my-7">
       <Button
         variant="default"
-        className="flex items-center rounded-md w-full bg-gray-50 dark:bg-gray-950 px-3.5 py-3 font-normal text-gray-600 dark:text-gray-400 ring-1 ring-gray-500/20 dark:ring-gray-400/20 ring-inset"
+        className="flex items-center text-sm rounded-md w-full bg-gray-50 dark:bg-gray-950 px-3.5 py-3 font-normal text-gray-600 dark:text-gray-400 ring-1 ring-gray-500/20 dark:ring-gray-400/20 ring-inset"
         {...buttonProps}
       >
         <Svg
           variant="outline"
-          width={18}
-          height={18}
+          width={16}
+          height={16}
           draw={[
             "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z",
           ]}
         />
         <div className="flex-1 text-start ml-1.5">Search blog posts...</div>
-        <kbd className="inline-flex items-center rounded-sm space-x-1.5 border border-gray-300 dark:border-gray-700 font-mono text-sm text-gray-600 dark:text-gray-400 px-1.5 py-0.5">
+        <kbd className="inline-flex items-center rounded-sm space-x-1.5 border border-gray-300 dark:border-gray-700 font-mono text-xs text-gray-600 dark:text-gray-400 px-1.5 py-0.5">
           <kbd>{modifierKey}</kbd>
           <kbd>K</kbd>
         </kbd>
