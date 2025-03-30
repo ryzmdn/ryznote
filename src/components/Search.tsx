@@ -292,8 +292,8 @@ const SearchInput = forwardRef<
     <div className="group relative flex h-12">
       <Svg
         variant="outline"
-        width={18}
-        height={18}
+        width={16}
+        height={16}
         draw={[
           "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z",
         ]}
@@ -307,7 +307,7 @@ const SearchInput = forwardRef<
         type="search"
         data-autofocus
         className={clss(
-          "flex-auto appearance-none bg-transparent pl-10 text-gray-700 dark:text-gray-300 outline-none placeholder:text-gray-500 focus:w-full focus:flex-none sm:text-sm",
+          "flex-auto text-sm/6 appearance-none bg-transparent pl-10 text-gray-700 dark:text-gray-300 outline-none placeholder:text-gray-500 focus:w-full focus:flex-none",
           searchState.status === SearchStatus.Loading ? "pr-11" : "pr-4"
         )}
         placeholder="Search blog posts..."
@@ -539,7 +539,7 @@ export function Search() {
         </kbd>
       </Button>
       <Suspense fallback={null}>
-        <SearchDialog className="block" {...dialogProps} />
+        <SearchDialog {...dialogProps} />
       </Suspense>
     </div>
   );
