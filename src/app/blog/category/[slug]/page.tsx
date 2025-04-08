@@ -14,7 +14,12 @@ const POSTS_PER_PAGE: number = 12;
 async function getCategoryId(slug: string): Promise<number | null> {
   try {
     const { data } = await axios.get<Category[]>(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`
+      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`,
+      {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
     );
     const category = data.find((cat) => cat.slug === slug);
     return category ? category.id : null;
@@ -35,6 +40,9 @@ async function getPostsByCategory(categorySlug: string, page: number) {
             page,
             _embed: true,
           },
+          headers: {
+            "Cache-Control": "no-store"
+          }
         }
       );
       const totalPosts = parseInt(headers["x-wp-total"], 10) || 0;
@@ -54,6 +62,9 @@ async function getPostsByCategory(categorySlug: string, page: number) {
           page,
           _embed: true,
         },
+        headers: {
+          "Cache-Control": "no-store"
+        }
       }
     );
     const totalPosts = parseInt(headers["x-wp-total"], 10) || 0;

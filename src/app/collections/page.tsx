@@ -11,7 +11,12 @@ export const metadata: Metadata = {
 async function getPosts() {
   try {
     const response = await axios.get<Category[]>(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`
+      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`,
+      {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
     );
     return response.data;
   } catch (error) {
