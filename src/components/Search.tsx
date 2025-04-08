@@ -61,6 +61,9 @@ function useWordPressSearch({ close }: { close: () => void }) {
           params: {
             search: query,
             per_page: 5
+          },
+          headers: {
+            "Cache-Control": "no-store"
           }
         }
       );
