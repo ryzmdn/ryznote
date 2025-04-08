@@ -73,11 +73,20 @@ function useWordPressSearch({ close }: { close: () => void }) {
       }));
     } catch (error) {
       console.error("Search error:", error);
+    
+      let errorMessage = "An error occurred while searching";
+      if (axios.isAxiosError(error)) {
+        errorMessage += `: ${error.message}`;
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        }
+      }
       
       setSearchState((prev) => ({ 
         ...prev, 
         status: SearchStatus.Error, 
-        results: [] 
+        results: [],
+        errorMessage
       }));
     }
   }, []);
