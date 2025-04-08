@@ -62,9 +62,6 @@ function useWordPressSearch({ close }: { close: () => void }) {
             search: query,
             per_page: 5
           },
-          headers: {
-            "Cache-Control": "no-store"
-          }
         }
       );
 
@@ -76,11 +73,20 @@ function useWordPressSearch({ close }: { close: () => void }) {
       }));
     } catch (error) {
       console.error("Search error:", error);
+    
+      let errorMessage = "An error occurred while searching";
+      if (axios.isAxiosError(error)) {
+        errorMessage += `: ${error.message}`;
+        if (error.response) {
+          console.error("Response data:", error.response.data);
+        }
+      }
       
       setSearchState((prev) => ({ 
         ...prev, 
         status: SearchStatus.Error, 
-        results: [] 
+        results: [],
+        errorMessage
       }));
     }
   }, []);
@@ -168,12 +174,11 @@ function SearchResult({
   query: string;
   onSelect: (post: Post) => void;
 }>) {
-  const title = post.title?.rendered || '';
-  const excerpt = post.excerpt?.rendered || '';
+  const title = post?.title?.rendered || '';
+  const excerpt = post?.excerpt?.rendered || '';
   
-  const cleanTitle = stripHtml(title);
-  const cleanExcerpt = stripHtml(excerpt).substring(0, 100) +
-    (excerpt.length > 100 ? "..." : "");
+  const cleanTitle = typeof title === 'string' ? stripHtml(title) : '';
+  const cleanExcerpt = typeof excerpt === 'string' ? stripHtml(excerpt).substring(0, 100) + (excerpt.length > 100 ? "..." : "") : '';
 
   return (
     <li
@@ -193,9 +198,9 @@ function SearchResult({
         {post.date && (
           <Time
             className="mt-1 text-xs text-gray-500"
-            date={new Date(post.date).toLocaleDateString()}
+            date={post.date}
           >
-            {formatDate(new Date(post.date).toLocaleDateString())}
+            {formatDate(post.date)}
           </Time>
         )}
         <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
