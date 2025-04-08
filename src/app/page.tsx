@@ -6,7 +6,11 @@ import { BlogGrid, SectionHeader } from "@/components/Layout/BlogSection";
 
 async function getPosts() {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`, {
+      headers: {
+        "Cache-Control": "no-store"
+      }
+    });
     return response.data;
   } catch (error) {
     console.error("Error fetching posts:", error);

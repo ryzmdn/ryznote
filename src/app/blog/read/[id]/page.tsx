@@ -17,7 +17,12 @@ export async function generateMetadata({
   const { id } = await params;
   try {
     const response = await axios.get<Post[]>(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?slug=${id}&_embed`
+      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?slug=${id}&_embed`,
+      {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
     );
     const post = response.data[0];
 
@@ -70,7 +75,12 @@ export async function generateMetadata({
 async function getPost(slug: string) {
   try {
     const response = await axios.get<Post[]>(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?slug=${slug}&_embed`
+      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?slug=${slug}&_embed`,
+      {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
     );
     return response.data[0] || null;
   } catch (error) {
@@ -82,7 +92,12 @@ async function getPost(slug: string) {
 async function getRelatedPosts(currentPost: Post, maxPosts: number = 3) {
   try {
     const response = await axios.get<Post[]>(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`
+      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`,
+      {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
     );
     const allPosts = response.data;
 

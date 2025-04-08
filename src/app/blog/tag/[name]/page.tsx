@@ -20,7 +20,12 @@ async function getTagId(slug: string): Promise<number | null> {
   try {
     const formatSlug = encodeURIComponent(slug.replace(/\s+/g, "-"));
     const { data } = await axios.get<Term[]>(
-      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/tags?slug=${formatSlug}`
+      `${process.env.NEXT_PUBLIC_WORDPRESS_API}/tags?slug=${formatSlug}`,
+      {
+        headers: {
+          "Cache-Control": "no-store"
+        }
+      }
     );
     return data.length > 0 ? data[0].id : null;
   } catch (error) {
@@ -46,6 +51,9 @@ async function getPostsByTag(
           page,
           _embed: true,
         },
+        headers: {
+          "Cache-Control": "no-store"
+        }
       }
     );
 
