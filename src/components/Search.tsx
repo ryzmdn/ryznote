@@ -198,9 +198,9 @@ function SearchResult({
         {post.date && (
           <Time
             className="mt-1 text-xs text-gray-500"
-            date={new Date(post.date).toLocaleDateString()}
+            date={post.date}
           >
-            {formatDate(new Date(post.date).toLocaleDateString())}
+            {formatDate(post.date)}
           </Time>
         )}
         <div className="mt-1 text-xs text-gray-600 dark:text-gray-400">
