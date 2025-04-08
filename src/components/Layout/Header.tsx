@@ -6,7 +6,7 @@ import { useTheme } from "@/context/ThemeProvider";
 import { Sidebar } from "@/components/Layout/Sidebar";
 import { Svg } from "@/components/Svg";
 import { Logo } from "@/components/Ui/Logo";
-import { Badge } from '../Ui/Badge';
+import { Badge } from "@/components/Ui/Badge";
 
 interface Navigation {
   name: string;
