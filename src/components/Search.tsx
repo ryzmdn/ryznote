@@ -174,12 +174,11 @@ function SearchResult({
   query: string;
   onSelect: (post: Post) => void;
 }>) {
-  const title = post.title?.rendered || '';
-  const excerpt = post.excerpt?.rendered || '';
+  const title = post?.title?.rendered || '';
+  const excerpt = post?.excerpt?.rendered || '';
   
-  const cleanTitle = stripHtml(title);
-  const cleanExcerpt = stripHtml(excerpt).substring(0, 100) +
-    (excerpt.length > 100 ? "..." : "");
+  const cleanTitle = typeof title === 'string' ? stripHtml(title) : '';
+  const cleanExcerpt = typeof excerpt === 'string' ? stripHtml(excerpt).substring(0, 100) + (excerpt.length > 100 ? "..." : "") : '';
 
   return (
     <li
