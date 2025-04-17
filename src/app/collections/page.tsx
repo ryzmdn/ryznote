@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Blog Collections",
 };
 
-async function getPosts() {
+async function getPosts(): Promise<Category[]> {
   try {
     const response = await axios.get<Category[]>(
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`,
