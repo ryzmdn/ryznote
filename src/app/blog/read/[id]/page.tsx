@@ -190,7 +190,7 @@ export default async function Content({
           dangerouslySetInnerHTML={{
             __html: nonBreakingSpace(post.content.rendered),
           }}
-          className="blog-content prose dark:prose-invert space-y-6"
+          className="blog-content flex flex-col gap-y-6"
         />
 
         <footer className="flex flex-wrap gap-x-2 gap-y-1.5 my-7">
