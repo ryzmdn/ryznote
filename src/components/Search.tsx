@@ -274,7 +274,7 @@ function SearchResults({
   }
 
   return (
-    <ul>
+    <ul className="w-full h-full max-h-100 overflow-y-auto">
       {results.map((post, index) => (
         <SearchResult
           key={post.id || index}
@@ -397,6 +397,16 @@ function SearchDialog({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, setOpen]);
 
+  useEffect(() => {
+    if (open) {
+      document.documentElement.classList.add("overflow-hidden");
+    }
+    
+    return () => {
+      document.documentElement.classList.remove("overflow-hidden");
+    }
+  }, [open]);
+
   const handleClose = () => {
     setOpen(false);
     setSearchState((prev) => ({ 
@@ -425,6 +435,7 @@ function SearchDialog({
           onClick={handleClose}
           aria-label="Close search dialog"
         />
+        
         <div className="fixed inset-0 z-50 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
           <div className="mx-auto transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 sm:max-w-xl dark:bg-gray-900 dark:ring-gray-800 p-6 text-center">
             <p className="text-red-600 dark:text-red-400">
