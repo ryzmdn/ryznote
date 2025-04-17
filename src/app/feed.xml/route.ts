@@ -35,7 +35,7 @@ export async function GET() {
       }
     });
 
-    posts.forEach((post: any) => {
+    posts.forEach((post: Post) => {
       feed.addItem({
         title: post.title.rendered,
         id: `${siteUrl}/blog/read/${post.slug}`,
