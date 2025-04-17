@@ -6,7 +6,6 @@ import { useTheme } from "@/context/ThemeProvider";
 import { Sidebar } from "@/components/Layout/Sidebar";
 import { Svg } from "@/components/Svg";
 import { Logo } from "@/components/Ui/Logo";
-import { Badge } from "@/components/Ui/Badge";
 
 interface Navigation {
   name: string;
@@ -29,18 +28,15 @@ export function Header() {
     <>
       <header id="Global Header" className="absolute top-0 left-0 z-30 w-full h-max bg-transparent">
         <nav aria-label="Global Navigation" className="flex items-center justify-between w-full p-6">
-          <div className="flex items-center gap-x-3.5">
-            <Button
-              variant="default"
-              href="/"
-              aria-label="Go to the home page"
-              className="flex items-center gap-x-2 -m-1.5 p-1.5"
-            >
-              <Logo />
-              <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">RyzNote</span>
-            </Button>
-            <Badge title="Beta version">Beta</Badge>
-          </div>
+          <Button
+            variant="default"
+            href="/"
+            aria-label="Go to the home page"
+            className="flex items-center gap-x-2 -m-1.5 p-1.5"
+          >
+            <Logo />
+            <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">RyzNote</span>
+          </Button>
           <div className="flex lg:hidden">
             <Button
               variant="ghost"
