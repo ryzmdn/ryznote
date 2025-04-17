@@ -3,10 +3,11 @@ import Image from "next/image";
 import { Heading } from "@/components/Layout/Heading";
 import { Button } from "@/components/Ui/Button";
 import { BlogGrid, SectionHeader } from "@/components/Layout/BlogSection";
+import { Post } from "@/types/wordpress";
 
 async function getPosts() {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`, {
+    const response = await axios.get<Post[]>(`${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`, {
       headers: {
         "Cache-Control": "no-store"
       }
