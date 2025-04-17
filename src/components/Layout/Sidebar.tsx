@@ -57,7 +57,7 @@ export function Sidebar({
           >
             <Logo />
             <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">
-              RyzNotes
+              RyzNote
             </span>
           </Button>
 
