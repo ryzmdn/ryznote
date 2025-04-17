@@ -24,10 +24,10 @@ export const metadata: Metadata = {
   description:
     "Personal blog of Rizky Ramadhan, a blogger and web developer sharing knowledge about technology, programming, and self-development.",
   generator: "Next.js",
-  applicationName: "RyzNotes",
+  applicationName: "RyzNote",
   referrer: "origin-when-cross-origin",
   keywords: [
-    "RyzNotes",
+    "RyzNote",
     "Rizky Ramadhan",
     "Blog",
     "Personal Blog",
@@ -57,11 +57,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "RyzNotes | Personal Blog by Rizky Ramadhan",
+    title: "RyzNote | Personal Blog by Rizky Ramadhan",
     description:
       "A personal blog by Rizky Ramadhan, covering technology, programming, and web development.",
     url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
-    siteName: "RyzNotes",
+    siteName: "RyzNote",
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/og_light.jpg`,
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RyzNotes | Personal Blog",
+    title: "RyzNote | Personal Blog",
     description:
       "Personal blog of Rizky Ramadhan, a blogger and web developer sharing knowledge about technology, programming, and self-development.",
     siteId: "@ryzmdn",

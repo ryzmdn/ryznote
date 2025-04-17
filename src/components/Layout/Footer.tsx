@@ -28,6 +28,9 @@ const navigation: Navigation = {
     { name: "Privacy policy", href: "privacy-policy" },
     { name: "License", href: "license" },
   ],
+  other: [
+    { name: "RSS", href: "feed.xml" }
+  ]
 };
 
 export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
