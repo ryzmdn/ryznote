@@ -5,7 +5,7 @@ import { Button } from "@/components/Ui/Button";
 import { BlogGrid, SectionHeader } from "@/components/Layout/BlogSection";
 import { Post } from "@/types/wordpress";
 
-async function getPosts() {
+async function getPosts(): Promise<Post[]> {
   try {
     const response = await axios.get<Post[]>(`${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`, {
       headers: {
