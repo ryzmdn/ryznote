@@ -19,7 +19,7 @@ export default function Contact() {
             Do you have questions
           </h2>
           <p className="mx-auto mt-6 max-w-2xl text-lg/8 text-pretty text-gray-600 dark:text-gray-400">
-            Want to chat? Just shoot me a dm <Button variant="link" href="https://www.linkedin.com/in/ryzmdn">with a direct question on LinkedIn</Button> and I'll respond whenever I can. I will ignore all soliciting.
+            Want to chat? Just shoot me a dm <Button variant="link" href="https://www.linkedin.com/in/ryzmdn">with a direct question on LinkedIn</Button> and I&apos;ll respond whenever I can. I will ignore all soliciting.
           </p>
         </div>
       </div>
