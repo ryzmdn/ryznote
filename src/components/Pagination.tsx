@@ -60,6 +60,7 @@ export function Pagination({ currentPage, totalPages, baseUrl }: Readonly<Pagina
         {currentPage < totalPages && (
           <Button
             variant="ghost"
+            rounded
             href={`${baseUrl}?page=${currentPage + 1}`}
             className="text-gray-600 dark:text-gray-400 px-3 py-1.5"
           >

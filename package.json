@@ -6,30 +6,37 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
-    "axios": "^1.8.4",
+    "axios": "^1.9.0",
+    "clsx": "^2.1.1",
     "feed": "^4.2.2",
+    "motion": "^12.11.3",
     "next": "15.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "ryznote": "file:"
+    "ryznote": "file:",
+    "tailwind-merge": "^3.3.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
-    "@tailwindcss/postcss": "^4.1.4",
-    "@types/node": "^22.14.1",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "eslint": "^9.24.0",
+    "@tailwindcss/postcss": "^4.1.6",
+    "@types/node": "^22.15.18",
+    "@types/react": "^19.1.4",
+    "@types/react-dom": "^19.1.5",
+    "eslint": "^9.26.0",
     "eslint-config-next": "15.3.0",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.1.6",
     "typescript": "^5.8.3"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "sharp"
+      "@tailwindcss/oxide",
+      "ryznote",
+      "sharp",
+      "unrs-resolver"
     ]
   }
 }
