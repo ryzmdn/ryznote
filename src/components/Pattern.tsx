@@ -1,22 +1,13 @@
-import { clss } from "@/utils/clss";
-import { Svg } from "./Svg";
+import { Svg } from "@/components/Svg";
 
 export function Pattern() {
   return (
-    <div className="absolute inset-0 -z-10 size-full">
-      <div
-        className={clss(
-          "absolute inset-0 size-full opacity-10 dark:opacity-25 pointer-events-none [background-size:40px_40px] select-none",
-          "[background-image:linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)]",
-        )}
-      />
+    <div className="absolute inset-0 -z-10 overflow-hidden size-full">
+      <div className="absolute inset-0 size-full opacity-10 dark:opacity-25 pointer-events-none [background-size:40px_40px] select-none [background-image:linear-gradient(to_right,#1f2937_1px,transparent_1px),linear-gradient(to_bottom,#1f2937_1px,transparent_1px)]" />
  
       <Svg
         variant="custom"
-        className={clss(
-          "animate-spotlight pointer-events-none absolute z-[1] h-[169%] w-[138%] lg:w-[84%] opacity-0",
-          "-top-40 left-0 md:-top-20 md:left-60"
-        )}
+        className="animate-spotlight pointer-events-none absolute z-[1] h-[169%] w-[138%] lg:w-[84%] opacity-0 -top-40 left-0 md:-top-20 md:left-60"
         viewBox="0 0 3787 2842"
       >
         <g filter="url(#filter)">
