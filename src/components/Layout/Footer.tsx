@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/Ui/Button";
 import { Svg } from "@/components/Svg";
-import { Pattern } from "@/components/Pattern";
 import { Category } from "@/types/wordpress";
 import { Logo } from "@/components/Ui/Logo";
 import { GridBackground } from "../Ui/GridBackground";
@@ -43,7 +42,7 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
 
   return (
     <>
-      <div className="relative isolate overflow-hidden bg-transparent px-6 py-24">
+      <div className="relative isolate overflow-hidden bg-transparent px-6 py-8">
         <GridBackground>
           <h2 className="mx-auto max-w-3xl text-center text-3xl font-semibold tracking-tight text-gray-800 dark:text-gray-200 sm:text-4xl">
             Get notifications for new posts
