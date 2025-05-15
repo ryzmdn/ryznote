@@ -27,7 +27,7 @@ export function Pagination({ currentPage, totalPages, baseUrl }: Readonly<Pagina
           <Button
             variant="ghost"
             rounded
-            href={`all?page=${currentPage - 1}`}
+            href={`${baseUrl}?page=${currentPage - 1}`}
             className="text-gray-600 dark:text-gray-400 px-3 py-1.5"
           >
             <span aria-hidden="true">&larr;</span> Previous
@@ -45,7 +45,7 @@ export function Pagination({ currentPage, totalPages, baseUrl }: Readonly<Pagina
               key={crypto.randomUUID()}
               variant="default"
               rounded
-              href={`all?page=${page}`}
+              href={`${baseUrl}?page=${page}`}
               className={`inline-flex justify-center items-center rounded-full size-7 text-sm font-medium ${
                 currentPage === page ? "bg-indigo-500 text-gray-200 outline-2 outline-indigo-500 outline-offset-2" : "text-gray-600 dark:text-gray-400 hover:bg-indigo-100 dark:hover:bg-indigo-900 hover:text-indigo-700 dark:hover:text-indigo-300"
               }`}
@@ -61,7 +61,7 @@ export function Pagination({ currentPage, totalPages, baseUrl }: Readonly<Pagina
           <Button
             variant="ghost"
             rounded
-            href={`all?page=${currentPage + 1}`}
+            href={`${baseUrl}?page=${currentPage + 1}`}
             className="text-gray-600 dark:text-gray-400 px-3 py-1.5"
           >
             Next <span aria-hidden="true">&rarr;</span>
