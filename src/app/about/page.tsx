@@ -82,20 +82,20 @@ export default function About() {
               </p>
               <p>
                 To accommodate my writings and projects, I created a website
-                called &quot;<i>RyzNotes</i>&quot;. Here, you can find various
+                called &quot;<i>RyzNote</i>&quot;. Here, you can find various
                 interesting articles, programming tutorials, and personal
-                projects that I work on. &quot;<i>RyzNotes</i>&quot; is my
+                projects that I work on. &quot;<i>RyzNote</i>&quot; is my
                 personal space in cyberspace, where I share my thoughts, ideas,
                 and knowledge with anyone who is interested.
               </p>
               <p>
-                I invite you to explore&quot;
+                I invite you to explore &quot;
                 <Button
                   variant="link"
                   current
                   href="https://ryznote.vercel.app"
                 >
-                  RyzNotes
+                  RyzNote
                 </Button>
                 &quot; and find content that is useful to you. Feel free to
                 leave comments, provide feedback, or contact me if you have

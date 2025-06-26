@@ -59,9 +59,8 @@ export default async function Home() {
       <Heading />
 
       <div className="w-full my-16 space-y-16">
-        <section id="featured-posts-section">
-          <SectionHeader title="Featured posts" />
-          <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        <section>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {posts.slice(0, 3).map((post) => (
               <CardPrimary
                 key={post.id}
@@ -74,7 +73,10 @@ export default async function Home() {
               />
             ))}
           </div>
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+        </section>
+        <section id="featured-posts-section">
+          <SectionHeader title="Featured posts" />
+          <div className="grid grid-cols-1 gap-6 py-8 md:grid-cols-2">
             {posts.slice(4, 8).map((post) => (
               <CatdSecondary
                 key={post.id}
