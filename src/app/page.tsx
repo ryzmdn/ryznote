@@ -1,18 +1,17 @@
-import axios from "axios";
 import Image from "next/image";
 import { Heading } from "@/components/Layout/Heading";
 import { Button } from "@/components/Ui/Button";
 import { BlogGrid, SectionHeader } from "@/components/Layout/BlogSection";
 import { Post } from "@/types/wordpress";
+import { CardPrimary } from "@/components/Cards/CardPrimary";
+import { CatdSecondary } from "@/components/Cards/CardSecondary";
 
 async function getPosts(): Promise<Post[]> {
   try {
-    const response = await axios.get<Post[]>(`${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`, {
-      headers: {
-        "Cache-Control": "no-store"
-      }
+    const response = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`, {
+      next: { revalidate: 60 }
     });
-    return response.data;
+    return response.json();
   } catch (error) {
     console.error("Error fetching posts:", error);
     return [];
@@ -62,15 +61,50 @@ export default async function Home() {
       <div className="w-full my-16 space-y-16">
         <section id="featured-posts-section">
           <SectionHeader title="Featured posts" />
-          <BlogGrid posts={posts} error={posts.length === 0} variant="featured" />
+          <div className="mx-auto mt-16 grid max-w-2xl auto-rows-fr grid-cols-1 gap-8 sm:mt-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+            {posts.slice(0, 3).map((post) => (
+              <CardPrimary
+                key={post.id}
+                contentHtml={post.content.rendered}
+                title={post.title.rendered}
+                url={post.slug}
+                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+                datetime={post.date}
+                description={post.excerpt.rendered}
+              />
+            ))}
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {posts.slice(4, 8).map((post) => (
+              <CatdSecondary
+                key={post.id}
+                contentHtml={post.content.rendered}
+                title={post.title.rendered}
+                url={post.slug}
+                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+                datetime={post.date}
+                description={post.excerpt.rendered}
+              />
+            ))}
+          </div>
         </section>
 
         <CollectionSection />
 
         <section id="recent-posts-section">
           <SectionHeader title="Recent posts" />
-          <div className="my-10">
-            <BlogGrid posts={posts} from={0} to={6} error={posts.length === 0} />
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.slice(9, 14).map((post) => (
+              <CatdSecondary
+                key={post.id}
+                contentHtml={post.content.rendered}
+                title={post.title.rendered}
+                url={post.slug}
+                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+                datetime={post.date}
+                description={post.excerpt.rendered}
+              />
+            ))}
           </div>
         </section>
       </div>
