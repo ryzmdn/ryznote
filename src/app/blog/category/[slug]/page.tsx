@@ -4,6 +4,7 @@ import { Pagination } from "@/components/Pagination";
 import { Heading } from "@/components/Layout/Heading";
 import { BlogGrid } from "@/components/Layout/BlogSection";
 import { Category, Post } from "@/types/wordpress";
+import { CardSecondary } from "@/components/Cards/CardSecondary";
 
 export const metadata: Metadata = {
   title: "Blogs",
@@ -95,7 +96,19 @@ export default async function CategoryPage({
       <Heading />
 
       <div id="category-posts-section" className="my-10">
-        <BlogGrid posts={posts} error={posts.length === 0} />
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.slice(0, 6).map((post) => (
+              <CardSecondary
+                key={post.id}
+                contentHtml={post.content.rendered}
+                title={post.title.rendered}
+                url={post.slug}
+                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+                datetime={post.date}
+                description={post.excerpt.rendered}
+              />
+            ))}
+          </div>
       </div>
 
       <Pagination
