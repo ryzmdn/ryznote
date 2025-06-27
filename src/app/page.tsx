@@ -3,7 +3,7 @@ import { Heading } from "@/components/Layout/Heading";
 import { Button } from "@/components/Ui/Button";
 import { SectionHeader } from "@/components/Layout/BlogSection";
 import { Post } from "@/types/wordpress";
-import { CatdSecondary } from "@/components/Cards/CardSecondary";
+import { CardSecondary } from "@/components/Cards/CardSecondary";
 
 async function getPosts(): Promise<Post[]> {
   try {
@@ -62,7 +62,7 @@ export default async function Home() {
           <SectionHeader title="Featured posts" />
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 py-5 md:grid-cols-2">
             {posts.slice(0, 4).map((post) => (
-              <CatdSecondary
+              <CardSecondary
                 key={post.id}
                 contentHtml={post.content.rendered}
                 title={post.title.rendered}
@@ -81,7 +81,7 @@ export default async function Home() {
           <SectionHeader title="Recent posts" />
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 6).map((post) => (
-              <CatdSecondary
+              <CardSecondary
                 key={post.id}
                 contentHtml={post.content.rendered}
                 title={post.title.rendered}

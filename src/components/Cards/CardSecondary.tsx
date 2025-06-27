@@ -17,7 +17,7 @@ interface SecondaryCardProps {
   description: string;
 }
 
-export function CatdSecondary({
+export function CardSecondary({
   contentHtml,
   datetime,
   url,
