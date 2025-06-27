@@ -2,7 +2,6 @@ import axios from "axios";
 import { Button } from "@/components/Ui/Button";
 import { Search } from "@/components/Search";
 import { Svg } from "@/components/Svg";
-import { Pattern } from "@/components/Pattern";
 import { Category } from "@/types/wordpress";
 
 async function getPosts() {

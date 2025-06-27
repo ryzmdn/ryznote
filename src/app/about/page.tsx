@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import picture from "@/assets/picture.webp";
 import { socialIcons } from "@/components/Icons";
-import { Pattern } from "@/components/Pattern";
 import { Svg } from "@/components/Svg";
 import { Button } from "@/components/Ui/Button";
 

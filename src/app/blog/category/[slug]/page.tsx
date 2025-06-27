@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import axios from "axios";
 import { Pagination } from "@/components/Pagination";
 import { Heading } from "@/components/Layout/Heading";
-import { BlogGrid } from "@/components/Layout/BlogSection";
 import { Category, Post } from "@/types/wordpress";
 import { CardSecondary } from "@/components/Cards/CardSecondary";
 

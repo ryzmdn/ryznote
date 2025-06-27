@@ -6,7 +6,7 @@ import { formatDate } from "@/utils/fotmatDate";
 import { averageReadingTime } from "@/utils/readingTime";
 import { Svg } from "@/components/Svg";
 import { Post, Term } from "@/types/wordpress";
-import { BlogGrid, SectionHeader } from "@/components/Layout/BlogSection";
+import { SectionHeader } from "@/components/Layout/BlogSection";
 import { convertEncode } from "@/utils/encode";
 import { CardSecondary } from "@/components/Cards/CardSecondary";
 

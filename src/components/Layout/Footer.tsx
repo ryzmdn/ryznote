@@ -1,7 +1,6 @@
 "use client"
 
 import { Button } from "@/components/Ui/Button";
-import { Svg } from "@/components/Svg";
 import { Category } from "@/types/wordpress";
 import { Logo } from "@/components/Ui/Logo";
 import { GridBackground } from "../Ui/GridBackground";
