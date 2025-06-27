@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { Time } from "../Time";
 import { formatDate } from "@/utils/fotmatDate";
+import Image from "next/image";
+import picture from "@/assets/picture.webp";
+import { convertEncode } from "@/utils/encode";
+import Link from "next/link";
 
 interface PrimaryCardProps {
   contentHtml: string;
@@ -31,12 +35,17 @@ export function CardPrimary({
   }, [contentHtml]);
 
   return (
-    <article className="relative isolate flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pt-80 pb-8 sm:pt-48 lg:pt-80">
-      <img
-        alt=""
-        src={thumbnail || "https://placehold.co/600x400"}
-        className="absolute inset-0 -z-10 size-full object-cover"
-      />
+    <article className="relative isolate group flex flex-col justify-end overflow-hidden rounded-2xl bg-gray-900 px-8 pt-80 pb-8 sm:pt-48 lg:pt-80">
+      {thumbnail ? (
+        <Image
+          fill
+          alt={`blog-thumbnail-${title.replace(/ /gi, '-').toLowerCase()}`}
+          src={thumbnail}
+          className="absolute inset-0 -z-10 size-full object-cover group-hover:scale-105"
+        />
+      ) : (
+        <div>h</div>
+      )}
       <div className="absolute inset-0 -z-10 bg-gradient-to-t from-gray-900 via-gray-900/40" />
       <div className="absolute inset-0 -z-10 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
 
@@ -44,29 +53,31 @@ export function CardPrimary({
         <Time date={new Date(datetime).toLocaleDateString()}>
           {formatDate(new Date(datetime).toLocaleDateString())}
         </Time>
-        <div className="-ml-4 flex items-center gap-x-4">
+        <div className="ml-4 flex items-center gap-x-4">
           <svg
             viewBox="0 0 2 2"
             className="-ml-0.5 size-0.5 flex-none fill-white/50"
           >
             <circle r={1} cx={1} cy={1} />
           </svg>
-          <div className="flex gap-x-2.5">
-            <img
-              alt=""
-              src={thumbnail || "https://placehold.co/600x400"}
-              className="size-6 flex-none rounded-full bg-white/10"
-            />
-            John Doe
+          <div className="flex items-center gap-x-2.5">
+            <div className="relative size-6 flex-none overflow-hidden rounded-full">
+              <Image
+                fill
+                src={picture}
+                alt=""
+              />
+            </div>
+            Ryzmdn
           </div>
         </div>
       </div>
 
-      <h3 className="mt-3 text-lg/6 font-semibold text-white">
-        <a href={url}>
+      <h3 className="mt-3 text-xl/7 font-semibold text-white line-clamp-2">
+        <Link href={`/blog/read/${url}`}>
           <span className="absolute inset-0" />
-          {title}
-        </a>
+          {convertEncode(title)}
+        </Link>
       </h3>
     </article>
   );
