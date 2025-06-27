@@ -5,6 +5,7 @@ import { Svg } from "@/components/Svg";
 import { Category } from "@/types/wordpress";
 import { Logo } from "@/components/Ui/Logo";
 import { GridBackground } from "../Ui/GridBackground";
+import { GoogleTranslate } from "../GoogleTranslate";
 
 interface NavigationPage {
   name: string;
@@ -85,40 +86,8 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
               <Logo />
               <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">RyzNote</span>
             </Button>
-            <div>
-              <label htmlFor="language-footer" className="sr-only">
-                Translate
-              </label>
-              <div className="mt-2">
-                <div className="flex items-center rounded-md bg-gray-50 dark:bg-gray-950 w-max pl-3 outline-1 -outline-offset-1 outline-gray-300 dark:outline-gray-700 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-500">
-                  <Svg
-                    variant="outline"
-                    width={16}
-                    height={16}
-                    draw={[
-                      "m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802",
-                    ]}
-                    className="col-start-1 row-start-1 text-gray-600 dark:text-gray-400"
-                  />
-                  <div className="grid shrink-0 grid-cols-1 w-60">
-                    <select
-                      id="language-footer"
-                      name="language"
-                      aria-label="Change language"
-                      className="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-sm/6 text-gray-600 dark:text-gray-400 placeholder:text-gray-500 focus:outline-0"
-                    >
-                      <option>English</option>
-                    </select>
-                    <Svg
-                      variant="outline"
-                      width={16}
-                      height={16}
-                      draw={["m19.5 8.25-7.5 7.5-7.5-7.5"]}
-                      className="text-gray-600 dark:text-gray-400 col-start-1 row-start-1 mr-2 self-center justify-self-end"
-                    />
-                  </div>
-                </div>
-              </div>
+            <div className="block">
+              <GoogleTranslate />
             </div>
           </div>
 

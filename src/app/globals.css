@@ -11,6 +11,15 @@
     content-visibility: auto;
   }
 
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+
+  .goog-logo-link,
+  .goog-te-gadget span {
+    display: none !important;
+  }
+
   .blog-content figure {
     @apply my-3.5 w-full;
   }
