@@ -1,9 +1,8 @@
 import Image from "next/image";
 import { Heading } from "@/components/Layout/Heading";
 import { Button } from "@/components/Ui/Button";
-import { BlogGrid, SectionHeader } from "@/components/Layout/BlogSection";
+import { SectionHeader } from "@/components/Layout/BlogSection";
 import { Post } from "@/types/wordpress";
-import { CardPrimary } from "@/components/Cards/CardPrimary";
 import { CatdSecondary } from "@/components/Cards/CardSecondary";
 
 async function getPosts(): Promise<Post[]> {
@@ -17,7 +16,7 @@ async function getPosts(): Promise<Post[]> {
     return [];
   }
 }
-
+ 
 function CollectionSection() {
   return (
     <div className="relative overflow-hidden rounded-lg lg:h-96">
@@ -59,25 +58,10 @@ export default async function Home() {
       <Heading />
 
       <div className="w-full my-16 space-y-16">
-        <section>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {posts.slice(0, 3).map((post) => (
-              <CardPrimary
-                key={post.id}
-                contentHtml={post.content.rendered}
-                title={post.title.rendered}
-                url={post.slug}
-                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
-                datetime={post.date}
-                description={post.excerpt.rendered}
-              />
-            ))}
-          </div>
-        </section>
         <section id="featured-posts-section">
           <SectionHeader title="Featured posts" />
-          <div className="grid grid-cols-1 gap-6 py-8 md:grid-cols-2">
-            {posts.slice(4, 8).map((post) => (
+          <div className="grid grid-cols-1 gap-x-8 gap-y-10 py-5 md:grid-cols-2">
+            {posts.slice(0, 4).map((post) => (
               <CatdSecondary
                 key={post.id}
                 contentHtml={post.content.rendered}
@@ -95,8 +79,8 @@ export default async function Home() {
 
         <section id="recent-posts-section">
           <SectionHeader title="Recent posts" />
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.slice(9, 14).map((post) => (
+          <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {posts.slice(0, 6).map((post) => (
               <CatdSecondary
                 key={post.id}
                 contentHtml={post.content.rendered}
