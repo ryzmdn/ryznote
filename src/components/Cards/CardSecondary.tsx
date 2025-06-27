@@ -3,6 +3,10 @@
 import { useEffect, useState } from "react";
 import { Time } from "../Time";
 import { formatDate } from "@/utils/fotmatDate";
+import Image from "next/image";
+import Link from "next/link";
+import { convertEncode } from "@/utils/encode";
+import picture from '@/assets/picture.webp';
 
 interface SecondaryCardProps {
   contentHtml: string;
@@ -32,51 +36,58 @@ export function CatdSecondary({
 
   return (
     <article
-      className="flex flex-col items-start justify-between"
+      className="group flex flex-col items-start justify-between"
     >
-      <div className="relative w-full">
-        <img
-          alt=""
-          src={thumbnail || "https://placehold.co/600x400"}
-          className="aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2"
-        />
+      <div className="relative w-full aspect-video rounded-2xl overflow-hidden sm:aspect-2/1 lg:aspect-3/2">
+        {thumbnail ? (
+          <Image
+            fill
+            src={thumbnail}
+            alt={`blog-thumbnail-${title.replace(/ /gi, '-').toLowerCase()}`}
+            className="w-full bg-gray-100 object-cover group-hover:scale-105"
+          />
+        ) : (
+          <div>h</div>
+        )}
         <div className="absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset" />
       </div>
       <div className="max-w-xl">
-        <div className="mt-8 flex items-center gap-x-4 text-xs">
-          <Time date={new Date(datetime).toLocaleDateString()}>
+        <div className="mt-4 flex items-center gap-x-4 text-xs">
+          <Time date={new Date(datetime).toLocaleDateString()} className="text-gray-600 dark:text-gray-400">
             {formatDate(new Date(datetime).toLocaleDateString())}
           </Time>
-          <a
-            href="/"
-            className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+          <Link
+            href={`/blog/tag/${category?.replace(/ /gi, '-').toLowerCase()}?page=1`}
+            className="inline-flex items-center capitalize rounded-full bg-gray-100 dark:bg-gray-900 px-2 py-1 text-xs font-medium text-gray-600 dark:text-gray-400"
           >
             {category}
-          </a>
+          </Link>
         </div>
         <div className="group relative">
-          <h3 className="mt-3 text-lg/6 font-semibold text-gray-900 group-hover:text-gray-600">
-            <a href="/">
+          <h3 className="mt-3 text-xl/7 line-clamp-2 font-semibold text-gray-900 dark:text-gray-100 group-hover:text-gray-600 dark:group-hover:text-gray-400">
+            <Link href={`/blog/read/${url}`}>
               <span className="absolute inset-0" />
-              {title}
-            </a>
+              {convertEncode(title)}
+            </Link>
           </h3>
-          <div className="mt-5 line-clamp-3 text-sm/6 text-gray-600" dangerouslySetInnerHTML={{ __html: description }} />
+          <div className="mt-5 line-clamp-3 text-sm/6 text-gray-600 dark:text-gray-400" dangerouslySetInnerHTML={{ __html: description }} />
         </div>
-        <div className="relative mt-8 flex items-center gap-x-4">
-          <img
-            alt=""
-            src={thumbnail || "https://placehold.co/600x400"}
-            className="size-10 rounded-full bg-gray-100"
-          />
-          <div className="text-sm/6">
-            <p className="font-semibold text-gray-900">
-              <a href="/">
-                <span className="absolute inset-0" />
-                John Doe
-              </a>
+        <div className="relative mt-5 flex items-center gap-x-4">
+          <div className="relative size-10 rounded-full overflow-hidden">
+            <Image
+              fill
+              src={picture}
+              alt="me"
+              className="object-cover"
+            />
+          </div>
+          <div className="text-sm">
+            <p className="font-semibold text-gray-800 dark:text-gray-200">
+              <Link href="/about">
+                <span className="absolute inset-0" /> Ryzmdn
+              </Link>
             </p>
-            <p className="text-gray-600">Writer</p>
+            <p className="text-gray-600 dark:text-gray-300">Content Writer</p>
           </div>
         </div>
       </div>
