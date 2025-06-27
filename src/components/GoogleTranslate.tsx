@@ -13,12 +13,12 @@ export function GoogleTranslate() {
       script.src = "//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       document.body.appendChild(script);
 
-      (window as any).googleTranslateElementInit = () => {
-        new (window as any).google.translate.TranslateElement(
+      (window as unknown as { google: any; googleTranslateElementInit: () => void }).googleTranslateElementInit = () => {
+        new (window as unknown as { google: any; googleTranslateElementInit: () => void }).google.translate.TranslateElement(
           {
             pageLanguage: "en",
             includedLanguages: "en,id,ja,fr,de,es,zh-CN",
-            layout: (window as any).google.translate.TranslateElement
+            layout: (window as unknown as { google: any; googleTranslateElementInit: () => void }).google.translate.TranslateElement
               .InlineLayout.SIMPLE,
             autoDisplay: false,
           },
