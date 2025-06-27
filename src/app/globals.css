@@ -2,16 +2,6 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
- 
-  @keyframes scroll {
-    to {
-      transform: translate(calc(-50% - 0.5rem));
-    }
-  }
-}
-
 @layer utilities {
   * {
     @apply transition-all duration-200 ease-linear;
@@ -22,7 +12,7 @@
   }
 
   .blog-content figure {
-    @apply my-10 w-full;
+    @apply my-3.5 w-full;
   }
   .blog-content figure > img {
     @apply aspect-video rounded-xl bg-gray-50 dark:bg-gray-950 object-cover;
@@ -57,10 +47,10 @@
   }
 
   .blog-content ul {
-    @apply list-disc mt-2.5 pl-4;
+    @apply list-disc my-2 pl-4;
   }
   .blog-content ol {
-    @apply list-decimal mt-2.5 pl-4;
+    @apply list-decimal my-2 pl-4;
   }
   .blog-content li {
     @apply text-gray-700 dark:text-gray-300 mt-2.5;
