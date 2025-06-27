@@ -6,9 +6,10 @@ import { formatDate } from "@/utils/fotmatDate";
 import { averageReadingTime } from "@/utils/readingTime";
 import { Svg } from "@/components/Svg";
 import { Post, Term } from "@/types/wordpress";
-import { BlogGrid, SectionHeader } from "@/components/Layout/BlogSection";
+import { SectionHeader } from "@/components/Layout/BlogSection";
+import { convertEncode } from "@/utils/encode";
+import { CardSecondary } from "@/components/Cards/CardSecondary";
 
-const nonBreakingSpace = (text: string) => text.replace(/&nbsp;/gi, " ");
 type Params = Promise<{ id: string }>;
 
 export async function generateMetadata({
@@ -40,7 +41,7 @@ export async function generateMetadata({
     const category = post._embedded?.['wp:term']?.[0]?.[0]?.name;
 
     return {
-      title: nonBreakingSpace(title),
+      title: convertEncode(title),
       description: description,
       openGraph: {
         title: title,
@@ -138,6 +139,7 @@ export default async function Content({
           <div className="flex justify-between items-center w-full mb-6">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 w-full">
               <Badge
+                href={`/blog/category/${category?.replace(/ /gi, '-').toLowerCase()}?page=1`}
                 title={`Category ${
                   category
                     ? category.charAt(0).toUpperCase() +
@@ -182,33 +184,48 @@ export default async function Content({
             </div>
           </div>
           <h1 className="text-4xl/tight font-semibold tracking-tight text-pretty text-gray-800 dark:text-gray-200 mb-3.5 sm:text-5xl/tight">
-            {nonBreakingSpace(post.title.rendered)}
+            {convertEncode(post.title.rendered)}
           </h1>
         </header>
 
         <div
           dangerouslySetInnerHTML={{
-            __html: nonBreakingSpace(post.content.rendered),
+            __html: convertEncode(post.content.rendered),
           }}
           className="blog-content flex flex-col gap-y-6"
         />
 
-        <footer className="flex flex-wrap gap-x-2 gap-y-1.5 my-7">
-          {tags.map((tag) => (
-            <Badge
-              key={tag}
-              href={`/blog/tag/${tag.replace(/ /gi, "-").toLowerCase()}?page=1`}
-              title={tag}
-            >
-              {tag}
-            </Badge>
-          ))}
+        <footer className="w-full py-7">
+          <h5 className="text-base/7 font-semibold">Tags</h5>
+          <div className="flex flex-wrap gap-x-2 gap-y-1.5 my-2">
+            {tags.map((tag) => (
+              <Badge
+                key={tag}
+                href={`/blog/tag/${tag.replace(/ /gi, "-").toLowerCase()}?page=1`}
+                title={tag}
+              >
+                {tag}
+              </Badge>
+            ))}
+          </div>
         </footer>
       </div>
 
       <section id="related-posts-section" className="w-full py-16">
         <SectionHeader title="Related posts" />
-        <BlogGrid posts={relatedPosts} error={relatedPosts.length === 0} />
+          <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+            {relatedPosts.map((post) => (
+              <CardSecondary
+                key={post.id}
+                contentHtml={post.content.rendered}
+                title={post.title.rendered}
+                url={post.slug}
+                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+                datetime={post.date}
+                description={post.excerpt.rendered}
+              />
+            ))}
+          </div>
       </section>
     </>
   );

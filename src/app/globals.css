@@ -2,34 +2,8 @@
 
 @variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --font-sans: var(--font-poppins);
-  --font-mono: var(--font-source-code-pro);
-  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
-
-  @keyframes spotlight {
-    0% {
-      opacity: 0;
-      transform: translate(-72%, -62%) scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%, -40%) scale(1);
-    }
-  }
-}
-
 @layer utilities {
-  html, body, div, span, iframe, h1, h2, h3, 
-  h4, h5, h6, p, blockquote, pre, a, abbr, 
-  address, cite, code, del, dfn, em, img, ins, 
-  kbd, button, small, strong, sub, sup, tt, var, 
-  b, u, i, center, dl, dt, dd, ol, ul, li, 
-  fieldset, form, label, legend, table, caption, 
-  tbody, tfoot, thead, tr, th, td, article, aside, 
-  canvas, details, figure, figcaption, footer, 
-  header, hgroup, menu, nav, section, summary,
-  time, mark, audio, video, select, input {
+  * {
     @apply transition-all duration-200 ease-linear;
   }
 
@@ -37,8 +11,17 @@
     content-visibility: auto;
   }
 
+  .goog-te-banner-frame.skiptranslate {
+    display: none !important;
+  }
+
+  .goog-logo-link,
+  .goog-te-gadget span {
+    display: none !important;
+  }
+
   .blog-content figure {
-    @apply my-10 w-full;
+    @apply my-3.5 w-full;
   }
   .blog-content figure > img {
     @apply aspect-video rounded-xl bg-gray-50 dark:bg-gray-950 object-cover;
@@ -73,10 +56,10 @@
   }
 
   .blog-content ul {
-    @apply list-disc mt-2.5 pl-4;
+    @apply list-disc my-2 pl-4;
   }
   .blog-content ol {
-    @apply list-decimal mt-2.5 pl-4;
+    @apply list-decimal my-2 pl-4;
   }
   .blog-content li {
     @apply text-gray-700 dark:text-gray-300 mt-2.5;
