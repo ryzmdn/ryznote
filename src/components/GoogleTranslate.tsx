@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-export default function GoogleTranslate() {
+export function GoogleTranslate() {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
