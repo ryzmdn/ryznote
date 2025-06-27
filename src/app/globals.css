@@ -3,33 +3,17 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-  --font-sans: var(--font-poppins);
-  --font-mono: var(--font-source-code-pro);
-  --animate-spotlight: spotlight 2s ease 0.75s 1 forwards;
-
-  @keyframes spotlight {
-    0% {
-      opacity: 0;
-      transform: translate(-72%, -62%) scale(0.5);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(-50%, -40%) scale(1);
+  --animate-scroll: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+ 
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
     }
   }
 }
 
 @layer utilities {
-  html, body, div, span, iframe, h1, h2, h3, 
-  h4, h5, h6, p, blockquote, pre, a, abbr, 
-  address, cite, code, del, dfn, em, img, ins, 
-  kbd, button, small, strong, sub, sup, tt, var, 
-  b, u, i, center, dl, dt, dd, ol, ul, li, 
-  fieldset, form, label, legend, table, caption, 
-  tbody, tfoot, thead, tr, th, td, article, aside, 
-  canvas, details, figure, figcaption, footer, 
-  header, hgroup, menu, nav, section, summary,
-  time, mark, audio, video, select, input {
+  * {
     @apply transition-all duration-200 ease-linear;
   }
 
