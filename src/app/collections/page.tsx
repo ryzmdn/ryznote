@@ -3,6 +3,7 @@ import axios from "axios";
 import { NotFound } from "@/components/NotFound";
 import { Button } from "@/components/common/Button";
 import { Category } from "@/types/wordpress";
+import { Svg } from "@/components/common/Svg";
 
 export const metadata: Metadata = {
   title: "Blog Collections",
@@ -14,8 +15,8 @@ async function getPosts(): Promise<Category[]> {
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`,
       {
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
     return response.data;
@@ -37,38 +38,56 @@ export default async function Collections() {
     }));
 
   return (
-    <div className="w-full py-12">
-      {mappedPosts.length > 0 ? (
-        <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {mappedPosts
-            .toSorted((a, b) => b.postCount - a.postCount)
-            .map((post) => (
-              <li
-                key={post.name}
-                id={`collection-${post.name.replace(/ /gi, "-").toLowerCase()}`}
-                className="col-span-1 flex rounded-md ring-1 ring-gray-200 dark:ring-gray-800"
-              >
-                <span className="flex w-20 shrink-0 items-center justify-center rounded-l-md font-medium text-gray-600 dark:text-gray-400 bg-gray-200 dark:bg-gray-800">
-                  {post.name.substring(0, 3).toUpperCase()}
-                </span>
-                <div className="flex-1 truncate px-4 py-2">
+    <>
+      <div className="bg-transparent w-full pt-10 pb-5">
+        <div className="text-center mx-auto max-w-2xl">
+          <h2 className="text-4xl font-semibold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl">
+            Posts by Collection
+          </h2>
+          <p className="mt-8 text-base font-medium text-pretty text-gray-600 dark:text-gray-400 sm:text-lg/7">
+            Explore our blog posts organized by collections. Each collection
+            contains a variety of topics and insights to enhance your reading
+            experience.
+          </p>
+        </div>
+      </div>
+
+      <div className="w-full pt-14 pb-24">
+        {mappedPosts.length > 0 ? (
+          <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+            {mappedPosts
+              .toSorted((a, b) => b.postCount - a.postCount)
+              .map((post) => (
+                <li
+                  key={post.name}
+                  id={`collection-${post.name
+                    .replace(/ /gi, "-")
+                    .toLowerCase()}`}
+                  className="group col-span-1 flex rounded-xl bg-gray-100 ring-1 ring-gray-200 dark:ring-gray-800"
+                >
                   <Button
-                    variant="link"
+                    variant="default"
                     href={post.href}
-                    className="capitalize text-lg/relaxed font-medium"
+                    className="capitalize text-lg/relaxed text-gray-800 dark:text-gray-200 font-medium size-full px-4 py-8"
                   >
                     {post.name.replace(/-/gi, " ")}
+                    <Svg
+                      variant="outline"
+                      width={24}
+                      height={24}
+                      draw={[
+                        "m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z",
+                      ]}
+                      className="text-gray-500 group-hover:-rotate-45"
+                    />
                   </Button>
-                  <p className="text-gray-700 dark:text-gray-300">
-                    {post.postCount} Post{post.postCount > 1 ? "s" : ""}
-                  </p>
-                </div>
-              </li>
-            ))}
-        </ul>
-      ) : (
-        <NotFound variant="error" />
-      )}
-    </div>
+                </li>
+              ))}
+          </ul>
+        ) : (
+          <NotFound variant="error" />
+        )}
+      </div>
+    </>
   );
 }
