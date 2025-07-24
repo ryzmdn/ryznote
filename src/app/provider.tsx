@@ -1,8 +1,8 @@
 import { ReactNode } from "react";
-import { Footer } from "@/components/Layout/Footer";
-import { Header } from "@/components/Layout/Header";
-import { ThemeProvider } from "@/context/ThemeProvider";
 import axios from "axios";
+import { Footer } from "@/components/Footer";
+import { Header } from "@/components/Header";
+import { ThemeProvider } from "@/context/ThemeProvider";
 import { Category } from "@/types/wordpress";
 
 async function getPosts() {

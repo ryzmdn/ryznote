@@ -1,9 +1,9 @@
 import axios from "axios";
 import type { Metadata } from "next";
-import { Pagination } from "@/components/Pagination";
+import { Pagination } from "@/components/ui/Pagination";
+import { Svg } from "@/components/common/Svg";
+import { BlogGrid } from "@/components/BlogSection";
 import { Post, Term } from "@/types/wordpress";
-import { Svg } from "@/components/Svg";
-import { BlogGrid } from "@/components/Layout/BlogSection";
 
 export const metadata: Metadata = {
   title: "Blog Tag",

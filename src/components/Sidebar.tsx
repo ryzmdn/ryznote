@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
-import { Button } from "@/components/Ui/Button";
-import { clss } from "@/utils/clss";
-import { Svg } from "@/components/Svg";
-import { Logo } from "@/components/Ui/Logo";
 import { usePathname } from "next/navigation";
+import { Button } from "@/components/common/Button";
+import { Svg } from "@/components/common/Svg";
+import { Logo } from "@/components/Logo";
+import { clss } from "@/utils/clss";
 
 interface SidebarProps {
   opened: boolean;

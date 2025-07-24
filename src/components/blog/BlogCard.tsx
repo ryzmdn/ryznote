@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import { Time } from "../Time";
+import { Time } from "@/components/common/Time";
 import { formatDate } from "@/utils/fotmatDate";
 import Image from "next/image";
 import Link from "next/link";

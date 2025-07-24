@@ -1,7 +1,7 @@
 import { BlogCard } from "@/components/BlogCard";
-import { Button } from "@/components/Ui/Button";
-import { NotFound } from "@/components/Error/NotFound";
-import { Svg } from "@/components/Svg";
+import { Button } from "@/components/common/Button";
+import { NotFound } from "@/components/NotFound";
+import { Svg } from "@/components/common/Svg";
 import { Post } from "@/types/wordpress";
 
 const BROWSE_MORE_BUTTON = (

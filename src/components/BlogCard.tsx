@@ -1,8 +1,8 @@
-import { Time } from "@/components/Time";
-import { formatDate } from "@/utils/fotmatDate";
-import { Button } from "@/components/Ui/Button";
+import { Time } from "@/components/common/Time";
+import { Button } from "@/components/common/Button";
+import { Badge } from "@/components/common/Badge";
 import { clss } from "@/utils/clss";
-import { Badge } from "@/components/Ui/Badge";
+import { formatDate } from "@/utils/fotmatDate";
 
 export interface BlogCardProps {
   variant?: "primary" | "secondary";

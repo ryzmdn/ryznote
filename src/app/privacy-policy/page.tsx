@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Button } from "@/components/Ui/Button";
+import { Button } from "@/components/common/Button";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",

@@ -1,4 +1,4 @@
-import { Svg } from "@/components/Svg";
+import { Svg } from "@/components/common/Svg";
 
 export function NotFound({ variant = "not-found" }: Readonly<{ variant?: "not-found" | "error" }>) {
   return (

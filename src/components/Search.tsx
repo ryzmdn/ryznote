@@ -10,9 +10,9 @@ import React, {
 } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import axios from "axios";
-import { Button } from "@/components/Ui/Button";
-import { Time } from "@/components/Time";
-import { Svg } from "@/components/Svg";
+import { Button } from "@/components/common/Button";
+import { Time } from "@/components/common/Time";
+import { Svg } from "@/components/common/Svg";
 import { formatDate } from "@/utils/fotmatDate";
 import { clss } from "@/utils/clss";
 import { Post } from "@/types/wordpress";

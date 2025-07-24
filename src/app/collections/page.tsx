@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import axios from "axios";
-import { NotFound } from "@/components/Error/NotFound";
-import { Button } from "@/components/Ui/Button";
+import { NotFound } from "@/components/NotFound";
+import { Button } from "@/components/common/Button";
 import { Category } from "@/types/wordpress";
 
 export const metadata: Metadata = {

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import picture from "@/assets/picture.webp";
 import { socialIcons } from "@/components/Icons";
-import { Svg } from "@/components/Svg";
-import { Button } from "@/components/Ui/Button";
+import { Svg } from "@/components/common/Svg";
+import { Button } from "@/components/common/Button";
 
 export const metadata: Metadata = {
   title: "About",

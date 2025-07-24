@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import axios from "axios";
 import { notFound } from "next/navigation";
-import { Badge } from "@/components/Ui/Badge";
-import { formatDate } from "@/utils/fotmatDate";
-import { averageReadingTime } from "@/utils/readingTime";
-import { Svg } from "@/components/Svg";
+import axios from "axios";
+import { Badge } from "@/components/common/Badge";
+import { Svg } from "@/components/common/Svg";
+import { SectionHeader } from "@/components/BlogSection";
+import { CardSecondary } from "@/components/blog/BlogCard";
 import { Post, Term } from "@/types/wordpress";
-import { SectionHeader } from "@/components/Layout/BlogSection";
 import { convertEncode } from "@/utils/encode";
-import { CardSecondary } from "@/components/Cards/CardSecondary";
+import { averageReadingTime } from "@/utils/readingTime";
+import { formatDate } from "@/utils/fotmatDate";
 
 type Params = Promise<{ id: string }>;
 

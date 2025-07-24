@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/Ui/Button";
+import { Button } from "@/components/common/Button";
 import { useTheme } from "@/context/ThemeProvider";
-import { Sidebar } from "@/components/Layout/Sidebar";
-import { Svg } from "@/components/Svg";
-import { Logo } from "@/components/Ui/Logo";
+import { Sidebar } from "@/components/Sidebar";
+import { Svg } from "@/components/common/Svg";
+import { Logo } from "@/components/Logo";
 
 interface Navigation {
   name: string;

@@ -1,5 +1,5 @@
-import { Button } from "@/components/Ui/Button";
 import { Metadata } from "next";
+import { Button } from "@/components/common/Button";
 
 export const metadata: Metadata = {
   title: "Terms of Service",

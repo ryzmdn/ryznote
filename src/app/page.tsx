@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Heading } from "@/components/Layout/Heading";
-import { Button } from "@/components/Ui/Button";
-import { SectionHeader } from "@/components/Layout/BlogSection";
+import { Heading } from "@/components/Heading";
+import { Button } from "@/components/common/Button";
+import { SectionHeader } from "@/components/BlogSection";
 import { Post } from "@/types/wordpress";
-import { CardSecondary } from "@/components/Cards/CardSecondary";
+import { CardSecondary } from "@/components/blog/BlogCard";
 
 async function getPosts(): Promise<Post[]> {
   try {

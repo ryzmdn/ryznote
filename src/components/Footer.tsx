@@ -1,9 +1,8 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/Ui/Button";
+import { Button } from "@/components/common/Button";
 import { Category } from "@/types/wordpress";
-import { Logo } from "@/components/Ui/Logo";
-import { GridBackground } from "../Ui/GridBackground";
+import { Logo } from "@/components/Logo";
 
 interface NavigationPage {
   name: string;
@@ -27,9 +26,7 @@ const navigation: Navigation = {
     { name: "Privacy policy", href: "privacy-policy" },
     { name: "License", href: "license" },
   ],
-  other: [
-    { name: "RSS", href: "feed.xml" }
-  ]
+  other: [{ name: "RSS", href: "feed.xml" }],
 };
 
 export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
@@ -42,37 +39,38 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
   return (
     <>
       <div className="relative isolate overflow-hidden bg-transparent px-6 py-8">
-        <GridBackground>
-          <h2 className="mx-auto max-w-3xl text-center text-3xl font-semibold tracking-tight text-gray-800 dark:text-gray-200 sm:text-4xl">
-            Get notifications for new posts
-          </h2>
-          <form className="mx-auto w-full mt-10 max-w-lg">
-            <div className="flex flex-col gap-4 lg:flex-row">
-              <label htmlFor="email-address-cta" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="email-address-cta"
-                name="email-address-cta"
-                type="email"
-                required
-                placeholder="Enter your email"
-                spellCheck={false}
-                autoComplete="off"
-                className="min-w-0 flex-auto rounded-md bg-gray-50 dark:bg-gray-950 px-4 py-2.5 text-base text-gray-700 dark:text-gray-300 outline-1 -outline-offset-1 outline-gray-900/10 dark:outline-gray-100/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2"
-              />
-              <Button type="submit" className="py-2 px-4">
-                Subscribe
-              </Button>
-            </div>
-            <p className="mt-2 ml-1 text-xs/6 text-gray-600 dark:text-gray-400">
-              This feature is under development.
-            </p>
-          </form>
-        </GridBackground>
+        <h2 className="mx-auto max-w-3xl text-center text-3xl font-semibold tracking-tight text-gray-800 dark:text-gray-200 sm:text-4xl">
+          Get notifications for new posts
+        </h2>
+        <form className="mx-auto w-full mt-10 max-w-lg">
+          <div className="flex flex-col gap-4 lg:flex-row">
+            <label htmlFor="email-address-cta" className="sr-only">
+              Email address
+            </label>
+            <input
+              id="email-address-cta"
+              name="email-address-cta"
+              type="email"
+              required
+              placeholder="Enter your email"
+              spellCheck={false}
+              autoComplete="off"
+              className="min-w-0 flex-auto rounded-md bg-gray-50 dark:bg-gray-950 px-4 py-2.5 text-base text-gray-700 dark:text-gray-300 outline-1 -outline-offset-1 outline-gray-900/10 dark:outline-gray-100/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2"
+            />
+            <Button type="submit" className="py-2 px-4">
+              Subscribe
+            </Button>
+          </div>
+          <p className="mt-2 ml-1 text-xs/6 text-gray-600 dark:text-gray-400">
+            This feature is under development.
+          </p>
+        </form>
       </div>
 
-      <footer id="Global footer" className="bg-gray-50 dark:bg-gray-950 px-4 pb-5 border-t border-gray-600/10 dark:border-gray-400/10 sm:px-6 lg:px-8">
+      <footer
+        id="Global footer"
+        className="bg-gray-50 dark:bg-gray-950 px-4 pb-5 border-t border-gray-600/10 dark:border-gray-400/10 sm:px-6 lg:px-8"
+      >
         <div className="pt-10 xl:grid xl:grid-cols-3 xl:gap-8">
           <div className="flex flex-col items-start gap-y-6">
             <Button
@@ -82,7 +80,9 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
               className="flex items-center gap-x-2 -m-1.5 p-1.5"
             >
               <Logo />
-              <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">RyzNote</span>
+              <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">
+                RyzNote
+              </span>
             </Button>
           </div>
 

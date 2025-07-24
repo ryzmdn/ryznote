@@ -1,5 +1,5 @@
 import { useTheme } from "@/context/ThemeProvider";
-import { Svg } from "../Svg";
+import { Svg } from "@/components/common/Svg";
 
 export function Logo() {
   const { darkMode } = useTheme();

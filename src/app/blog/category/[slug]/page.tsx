@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import axios from "axios";
-import { Pagination } from "@/components/Pagination";
-import { Heading } from "@/components/Layout/Heading";
+import { Pagination } from "@/components/ui/Pagination";
+import { Heading } from "@/components/Heading";
+import { CardSecondary } from "@/components/blog/BlogCard";
 import { Category, Post } from "@/types/wordpress";
-import { CardSecondary } from "@/components/Cards/CardSecondary";
 
 export const metadata: Metadata = {
   title: "Blogs",
