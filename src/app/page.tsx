@@ -1,9 +1,9 @@
 import Image from "next/image";
-import { Heading } from "@/components/Heading";
 import { Button } from "@/components/common/Button";
 import { SectionHeader } from "@/components/BlogSection";
 import { Post } from "@/types/wordpress";
 import { CardSecondary } from "@/components/blog/BlogCard";
+import { HeroSection } from "@/components/HeroSection";
 
 async function getPosts(): Promise<Post[]> {
   try {
@@ -55,7 +55,7 @@ export default async function Home() {
 
   return (
     <>
-      <Heading />
+      <HeroSection />
 
       <div className="w-full my-16 space-y-16">
         <section id="featured-posts-section">

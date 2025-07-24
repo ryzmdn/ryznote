@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import axios from "axios";
 import { Pagination } from "@/components/ui/Pagination";
-import { Heading } from "@/components/Heading";
 import { CardSecondary } from "@/components/blog/BlogCard";
 import { Category, Post } from "@/types/wordpress";
 
@@ -92,8 +91,6 @@ export default async function CategoryPage({
 
   return (
     <>
-      <Heading />
-
       <div id="category-posts-section" className="my-10">
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 6).map((post) => (
