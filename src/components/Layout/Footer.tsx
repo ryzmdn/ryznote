@@ -4,7 +4,6 @@ import { Button } from "@/components/Ui/Button";
 import { Category } from "@/types/wordpress";
 import { Logo } from "@/components/Ui/Logo";
 import { GridBackground } from "../Ui/GridBackground";
-import { GoogleTranslate } from "../GoogleTranslate";
 
 interface NavigationPage {
   name: string;
@@ -85,9 +84,6 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
               <Logo />
               <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">RyzNote</span>
             </Button>
-            <div className="block">
-              <GoogleTranslate />
-            </div>
           </div>
 
           <div className="mt-16 grid grid-cols-2 gap-y-8 md:grid-cols-4 sm:gap-x-6 sm:gap-y-8 xl:col-span-2 xl:mt-0">
