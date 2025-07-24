@@ -1,6 +1,7 @@
 "use client";
 
-import React, {
+import {
+  ChangeEvent,
   forwardRef,
   Suspense,
   useCallback,
@@ -15,6 +16,7 @@ import { Time } from "@/components/common/Time";
 import { Svg } from "@/components/common/Svg";
 import { formatDate } from "@/utils/fotmatDate";
 import { clss } from "@/utils/clss";
+import { convertEncode } from "@/utils/encode";
 import { Post } from "@/types/wordpress";
 
 enum SearchStatus {
@@ -74,7 +76,7 @@ function useWordPressSearch({ close }: { close: () => void }) {
     } catch (error) {
       console.error("Search error:", error);
     
-      let errorMessage = "An error occurred while searching";
+      let errorMessage: string = "An error occurred while searching";
       if (axios.isAxiosError(error)) {
         errorMessage += `: ${error.message}`;
         if (error.response) {
@@ -92,7 +94,7 @@ function useWordPressSearch({ close }: { close: () => void }) {
   }, []);
 
   const handleInputChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement>) => {
       const query = event.target.value;
       setSearchState((prev) => ({ ...prev, query }));
       
@@ -117,7 +119,7 @@ function useWordPressSearch({ close }: { close: () => void }) {
 
   const navigateToPost = useCallback(
     (post: Post) => {
-      const customUrl = `/blog/read/${post.slug}`;
+      const customUrl: string = `/blog/read/${post.slug}`;
       router.push(customUrl);
       close();
     },
@@ -142,8 +144,8 @@ function HighlightQuery({
 }: Readonly<{ text: string; query: string }>) {
   if (!query) return <>{text}</>;
 
-  const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const parts = text.split(new RegExp(`(${escapedQuery})`, "gi"));
+  const escapedQuery: string = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const parts: string[] = text.split(new RegExp(`(${escapedQuery})`, "gi"));
 
   return (
     <>
@@ -174,11 +176,11 @@ function SearchResult({
   query: string;
   onSelect: (post: Post) => void;
 }>) {
-  const title = post?.title?.rendered || '';
-  const excerpt = post?.excerpt?.rendered || '';
-  
-  const cleanTitle = typeof title === 'string' ? stripHtml(title) : '';
-  const cleanExcerpt = typeof excerpt === 'string' ? stripHtml(excerpt).substring(0, 100) + (excerpt.length > 100 ? "..." : "") : '';
+  const title: string = post?.title?.rendered || '';
+  const excerpt: string = post?.excerpt?.rendered || '';
+  const excerptLength: string = excerpt.length > 100 ? "..." : "";
+  const cleanTitle: string = typeof title === 'string' ? stripHtml(convertEncode(title)) : '';
+  const cleanExcerpt: string = typeof excerpt === 'string' ? stripHtml(convertEncode(excerpt)).substring(0, 100) + (excerptLength) : '';
 
   return (
     <li
@@ -292,7 +294,7 @@ const SearchInput = forwardRef<
   HTMLInputElement,
   {
     searchState: WordPressSearchState;
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
     onClose: () => void;
   }
 >(function SearchInput({ searchState, onChange, onClose }, inputRef) {
@@ -469,7 +471,7 @@ function SearchDialog({
         aria-label="Close search dialog"
       />
 
-      <div className="fixed inset-y-0 inset-x-1/2 -translate-x-1/2 z-50 w-[calc(100%-50%)] h-max overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
+      <div className="fixed inset-y-0 inset-x-1/2 -translate-x-1/2 z-50 w-[calc(100%-20%)] h-max overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:w-[calc(100%-50%)] lg:px-8 lg:py-[15vh]">
         <div className="mx-auto w-full transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 dark:bg-gray-900 dark:ring-gray-800">
           <form 
             ref={formRef} 
