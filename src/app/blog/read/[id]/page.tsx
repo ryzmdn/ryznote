@@ -4,7 +4,7 @@ import axios from "axios";
 import { Badge } from "@/components/common/Badge";
 import { Svg } from "@/components/common/Svg";
 import { SectionHeader } from "@/components/BlogSection";
-import { CardSecondary } from "@/components/blog/BlogCard";
+import { BlogCard } from "@/components/blog/BlogCard";
 import { Post, Term } from "@/types/wordpress";
 import { convertEncode } from "@/utils/encode";
 import { averageReadingTime } from "@/utils/readingTime";
@@ -215,7 +215,7 @@ export default async function Content({
         <SectionHeader title="Related posts" />
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {relatedPosts.map((post) => (
-              <CardSecondary
+              <BlogCard
                 key={post.id}
                 contentHtml={post.content.rendered}
                 title={post.title.rendered}

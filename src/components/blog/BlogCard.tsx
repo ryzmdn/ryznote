@@ -8,7 +8,7 @@ import Link from "next/link";
 import { convertEncode } from "@/utils/encode";
 import picture from '@/assets/picture.webp';
 
-interface SecondaryCardProps {
+interface Props {
   contentHtml: string;
   datetime: string;
   url: string;
@@ -17,14 +17,14 @@ interface SecondaryCardProps {
   description: string;
 }
 
-export function CardSecondary({
+export function BlogCard({
   contentHtml,
   datetime,
   url,
   category,
   title,
   description,
-}: Readonly<SecondaryCardProps>) {
+}: Readonly<Props>) {
   const [thumbnail, setThumbnail] = useState<string | null>(null);
   
     useEffect(() => {

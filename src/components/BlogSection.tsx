@@ -1,4 +1,4 @@
-import { BlogCard } from "@/components/BlogCard";
+import { BlogCard } from "@/components/blog/BlogCard";
 import { Button } from "@/components/common/Button";
 import { NotFound } from "@/components/NotFound";
 import { Svg } from "@/components/common/Svg";
@@ -63,8 +63,8 @@ function BlogGrid({
           {posts.slice(0, 1).map((post) => (
             <BlogCard
               key={post.id}
-              variant="primary"
               title={post.title.rendered}
+              contentHtml={post.content.rendered}
               url={post.slug}
               category={post._embedded?.["wp:term"]?.[0]?.[0].name}
               datetime={post.date}
@@ -77,6 +77,7 @@ function BlogGrid({
               <BlogCard
                 key={post.id}
                 title={post.title.rendered}
+                contentHtml={post.content.rendered}
                 url={post.slug}
                 category={post._embedded?.["wp:term"]?.[0]?.[0].name}
                 datetime={post.date}
@@ -91,6 +92,7 @@ function BlogGrid({
             <BlogCard
               key={post.id}
               title={post.title.rendered}
+              contentHtml={post.content.rendered}
               url={post.slug}
               category={post._embedded?.["wp:term"]?.[0]?.[0].name}
               datetime={post.date}
@@ -113,6 +115,7 @@ function BlogGrid({
           <BlogCard
             key={post.id}
             title={post.title.rendered}
+            contentHtml={post.content.rendered}
             url={post.slug}
             category={post._embedded?.["wp:term"]?.[0]?.[0].name}
             datetime={post.date}

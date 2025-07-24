@@ -2,7 +2,7 @@ import Image from "next/image";
 import { Button } from "@/components/common/Button";
 import { SectionHeader } from "@/components/BlogSection";
 import { Post } from "@/types/wordpress";
-import { CardSecondary } from "@/components/blog/BlogCard";
+import { BlogCard } from "@/components/blog/BlogCard";
 import { HeroSection } from "@/components/HeroSection";
 
 async function getPosts(): Promise<Post[]> {
@@ -62,7 +62,7 @@ export default async function Home() {
           <SectionHeader title="Featured posts" />
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 py-5 md:grid-cols-2">
             {posts.slice(0, 4).map((post) => (
-              <CardSecondary
+              <BlogCard
                 key={post.id}
                 contentHtml={post.content.rendered}
                 title={post.title.rendered}
@@ -81,7 +81,7 @@ export default async function Home() {
           <SectionHeader title="Recent posts" />
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 6).map((post) => (
-              <CardSecondary
+              <BlogCard
                 key={post.id}
                 contentHtml={post.content.rendered}
                 title={post.title.rendered}
