@@ -3,6 +3,7 @@ import axios from "axios";
 import { Pagination } from "@/components/ui/Pagination";
 import { BlogCard } from "@/components/blog/BlogCard";
 import { Category, Post } from "@/types/wordpress";
+import { GridLayout } from "@/components/blog/GridLayout";
 
 export const metadata: Metadata = {
   title: "Blogs",
@@ -16,8 +17,8 @@ async function getCategoryId(slug: string): Promise<number | null> {
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`,
       {
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
     const category = data.find((cat) => cat.slug === slug);
@@ -40,8 +41,8 @@ async function getPostsByCategory(categorySlug: string, page: number) {
             _embed: true,
           },
           headers: {
-            "Cache-Control": "no-store"
-          }
+            "Cache-Control": "no-store",
+          },
         }
       );
       const totalPosts = parseInt(headers["x-wp-total"], 10) || 0;
@@ -62,8 +63,8 @@ async function getPostsByCategory(categorySlug: string, page: number) {
           _embed: true,
         },
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
     const totalPosts = parseInt(headers["x-wp-total"], 10) || 0;
@@ -86,25 +87,27 @@ export default async function CategoryPage({
   const { page } = await searchParams;
   const tagName = decodeURIComponent(slug);
   const currentPage = parseInt(page || "1", 10);
-  
+
   const { posts, totalPages } = await getPostsByCategory(tagName, currentPage);
 
   return (
     <>
-      <div id="category-posts-section" className="my-10">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {posts.slice(0, 6).map((post) => (
-              <BlogCard
-                key={post.id}
-                contentHtml={post.content.rendered}
-                title={post.title.rendered}
-                url={post.slug}
-                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
-                datetime={post.date}
-                description={post.excerpt.rendered}
-              />
-            ))}
-          </div>
+      <GridLayout content={posts} />
+      
+      <div id="category-posts-section" className="w-full my-10 py-16">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
+          {posts.slice(3, 12).map((post) => (
+            <BlogCard
+              key={post.id}
+              contentHtml={post.content.rendered}
+              title={post.title.rendered}
+              url={post.slug}
+              category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+              datetime={post.date}
+              description={post.excerpt.rendered}
+            />
+          ))}
+        </div>
       </div>
 
       <Pagination
