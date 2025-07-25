@@ -1,6 +1,7 @@
 import { Button } from "@/components/common/Button";
 import { UniqueCard } from "@/components/blog/UniqueCard";
 import { Post } from "@/types/wordpress";
+import { Svg } from "./common/Svg";
 
 async function getPosts(): Promise<Post[]> {
   try {
@@ -36,6 +37,24 @@ export async function HeroSection() {
             </Button>
           </div>
         </div>
+        <div className="flex justify-center mb-8 sm:hidden">
+          <Button variant="default" href="https://ryzmdn.wordpress.com/" className="inline-flex space-x-6">
+            <span className="rounded-full bg-indigo-500/10 px-3 py-1 text-sm/6 font-semibold text-indigo-400 ring-1 ring-indigo-500/25 ring-inset">
+              Visit My Wordpress
+            </span>
+            <span className="inline-flex items-center space-x-2 text-sm/6 font-medium text-gray-700 dark:text-gray-300">
+              <span>Let&apos;s go</span>
+              <Svg
+                variant="outline"
+                width={16}
+                height={16}
+                draw={["m8.25 4.5 7.5 7.5-7.5 7.5"]}
+                className="text-gray-500"
+              />
+            </span>
+          </Button>
+        </div>
+
         <div className="text-center">
           <h1 className="text-5xl font-semibold tracking-tight text-balance text-gray-900 sm:text-7xl">
             Welcome to My Personal Blog
@@ -50,14 +69,14 @@ export async function HeroSection() {
               href="/blog/category/all?page=1"
               className="px-5 py-3 rounded-xl"
             >
-              View All Blogs
+              View All Blogs &rarr;
             </Button>
             <Button
               variant="secondary"
               href="/collections"
               className="px-5 py-3 rounded-xl"
             >
-              See All Collections
+              See All Collections &rarr;
             </Button>
           </div>
         </div>
