@@ -15,11 +15,11 @@ export function GridLayout({ content }: Readonly<{ content: Post[] }>) {
   }, []);
 
   function getThumbnailFromContent(contentHtml?: string): string {
-    if (!isClient || !contentHtml) return "https://placehold.co/600x400";
+    if (!isClient || !contentHtml) return "https://www.svgrepo.com/show/532577/image-square-xmark.svg";
     const doc = new DOMParser().parseFromString(contentHtml, "text/html");
     const img = doc.querySelector("img[data-orig-file]");
     return (
-      img?.getAttribute("data-orig-file") || "https://placehold.co/600x400"
+      img?.getAttribute("data-orig-file") || "https://www.svgrepo.com/show/532577/image-square-xmark.svg"
     );
   }
 

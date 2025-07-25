@@ -29,7 +29,7 @@ export function UniqueCard({
     const doc = new DOMParser().parseFromString(contentHtml, "text/html");
     const img = doc.querySelector("img[data-orig-file]");
     const imgSrc =
-      img?.getAttribute("data-orig-file") || "https://placehold.co/600x400";
+      img?.getAttribute("data-orig-file") || "https://www.svgrepo.com/show/532577/image-square-xmark.svg";
     setThumbnail(imgSrc);
   }, [contentHtml]);
 
