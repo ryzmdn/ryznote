@@ -1,8 +1,8 @@
 "use client";
 
 import { Button } from "@/components/common/Button";
-import { Category } from "@/types/wordpress";
 import { Logo } from "@/components/Logo";
+import { Category } from "@/types/wordpress";
 
 interface NavigationPage {
   name: string;
@@ -21,12 +21,12 @@ const navigation: Navigation = {
     { name: "Contact", href: "contact" },
     { name: "Faqs", href: "frequently-asked-questions" },
   ],
-  legal: [
+  resources: [
     { name: "Terms of service", href: "terms-of-service" },
     { name: "Privacy policy", href: "privacy-policy" },
     { name: "License", href: "license" },
+    { name: "RSS Page", href: "feed.xml" },
   ],
-  other: [{ name: "RSS", href: "feed.xml" }],
 };
 
 export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
@@ -71,8 +71,8 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
         id="Global footer"
         className="bg-gray-50 dark:bg-gray-950 px-4 pb-5 border-t border-gray-600/10 dark:border-gray-400/10 sm:px-6 lg:px-8"
       >
-        <div className="pt-10 xl:grid xl:grid-cols-3 xl:gap-8">
-          <div className="flex flex-col items-start gap-y-6">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 mt-8 py-8 md:grid-cols-3 lg:grid-cols-5 lg:gap-x-14">
+          <div className="col-span-2 flex flex-col items-start gap-y-6 md:col-span-3 lg:col-span-2">
             <Button
               variant="default"
               href="/"
@@ -84,60 +84,63 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
                 RyzNote
               </span>
             </Button>
+            <p className="text-sm/6 text-gray-700 dark:text-gray-300">
+              Discover stories, insights, and inspiration from my journey.
+              Explore articles on technology, creativity, and everyday
+              life—written to spark ideas and connect with fellow readers.
+            </p>
           </div>
 
-          <div className="mt-16 grid grid-cols-2 gap-y-8 md:grid-cols-4 sm:gap-x-6 sm:gap-y-8 xl:col-span-2 xl:mt-0">
-            {topCategories.length > 0 && (
-              <div className="text-start w-full">
-                <h3 className="text-sm/6 font-medium text-gray-800 dark:text-gray-200">
-                  Suggestions
-                </h3>
-                <ul className="flex flex-col gap-y-3 mt-6 w-full">
-                  <li>
+          {topCategories.length > 0 && (
+            <div className="text-start w-full">
+              <h3 className="text-sm/6 font-medium text-gray-800 dark:text-gray-200">
+                Suggestions
+              </h3>
+              <ul className="flex flex-col gap-y-3 mt-6 w-full">
+                <li>
+                  <Button
+                    variant="link"
+                    href="/blog/category/all?page=1"
+                    className="font-normal text-sm/6 text-gray-600 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
+                  >
+                    All
+                  </Button>
+                </li>
+                {topCategories.slice(0, 4).map((cat) => (
+                  <li key={cat.id}>
                     <Button
                       variant="link"
-                      href="/blog/category/all?page=1"
-                      className="font-normal text-sm/6 text-gray-600 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
+                      href={`/blog/category/${cat.slug}?page=1`}
+                      className="font-normal capitalize text-sm/6 text-gray-600 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
                     >
-                      All
+                      {cat.name}
                     </Button>
                   </li>
-                  {topCategories.slice(0, 4).map((cat) => (
-                    <li key={cat.id}>
-                      <Button
-                        variant="link"
-                        href={`/blog/category/${cat.slug}?page=1`}
-                        className="font-normal capitalize text-sm/6 text-gray-600 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
-                      >
-                        {cat.name}
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
+                ))}
+              </ul>
+            </div>
+          )}
 
-            {Object.entries(navigation).map(([category, items]) => (
-              <div key={category} className="text-start w-full">
-                <h3 className="text-sm/6 font-medium text-gray-800 dark:text-gray-200">
-                  {category.charAt(0).toUpperCase() + category.slice(1)}
-                </h3>
-                <ul className="flex flex-col gap-y-3 mt-6 w-full">
-                  {items.map((item) => (
-                    <li key={item.name}>
-                      <Button
-                        variant="link"
-                        href={`/${item.href}`}
-                        className="font-normal text-sm/6 text-gray-600 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
-                      >
-                        {item.name}
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          {Object.entries(navigation).map(([category, items]) => (
+            <div key={category} className="text-start w-full">
+              <h3 className="text-sm/6 font-medium text-gray-800 dark:text-gray-200">
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </h3>
+              <ul className="flex flex-col gap-y-3 mt-6 w-full">
+                {items.map((item) => (
+                  <li key={item.name}>
+                    <Button
+                      variant="link"
+                      href={`/${item.href}`}
+                      className="font-normal text-sm/6 text-gray-600 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-300"
+                    >
+                      {item.name}
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         <div className="text-center mt-12 border-t border-gray-900/10 dark:border-gray-100/10 pt-5">
