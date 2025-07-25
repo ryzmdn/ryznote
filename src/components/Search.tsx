@@ -530,19 +530,12 @@ function useSearchProps() {
 }
 
 export function Search() {
-  const [modifierKey, setModifierKey] = useState<string>("");
   const { buttonProps, dialogProps } = useSearchProps();
-
-  useEffect(() => {
-    setModifierKey(
-      /(Mac|iPhone|iPod|iPad)/i.test(navigator.userAgent) ? "⌘" : "Ctrl "
-    );
-  }, []);
 
   return (
     <>
       <Button
-        variant="default"
+        variant="ghost"
         rounded
         {...buttonProps}
       >
