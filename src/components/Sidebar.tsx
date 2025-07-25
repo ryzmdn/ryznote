@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/common/Button";
 import { Svg } from "@/components/common/Svg";
 import { Logo } from "@/components/Logo";
+import { Search } from "@/components/Search";
 import { clss } from "@/utils/clss";
 
 interface SidebarProps {
@@ -39,7 +40,12 @@ export function Sidebar({
   }, [pathname, setMobileMenuOpen]);
 
   return (
-    <div className={clss("fixed inset-0 z-50 lg:hidden", opened ? "block" : "hidden")}>
+    <div
+      className={clss(
+        "fixed inset-0 z-50 lg:hidden",
+        opened ? "block" : "hidden"
+      )}
+    >
       {opened && (
         <button
           className="fixed inset-0 z-40 backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
@@ -47,7 +53,10 @@ export function Sidebar({
         />
       )}
 
-      <aside id="mobile-sidebar" className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-gray-50 dark:bg-gray-950 shadow-lg ring-1 ring-gray-900/10 dark:ring-gray-100/10 px-6 py-6">
+      <aside
+        id="mobile-sidebar"
+        className="fixed inset-y-0 right-0 z-50 w-full max-w-sm bg-gray-50 dark:bg-gray-950 shadow-lg ring-1 ring-gray-900/10 dark:ring-gray-100/10 px-6 py-6"
+      >
         <div className="flex items-center justify-between">
           <Button
             variant="default"
@@ -76,6 +85,7 @@ export function Sidebar({
         </div>
 
         <div className="mt-6 px-2">
+          <Search />
           <div className="flex flex-col gap-y-2 py-6 divide-y divide-gray-100 dark:divide-gray-900">
             {navigation.map((item) => (
               <Button

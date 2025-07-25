@@ -21,9 +21,9 @@ import { Post } from "@/types/wordpress";
 
 enum SearchStatus {
   Idle = "idle",
-  Loading = "loading", 
+  Loading = "loading",
   Success = "success",
-  Error = "error"
+  Error = "error",
 }
 
 interface WordPressSearchState {
@@ -41,15 +41,15 @@ function useWordPressSearch({ close }: { close: () => void }) {
     isOpen: false,
     status: SearchStatus.Idle,
   });
-  
+
   const debounceTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const fetchResults = useCallback(async (query: string) => {
     if (!query || query.length < 2) {
-      setSearchState((prev) => ({ 
-        ...prev, 
-        results: [], 
-        status: SearchStatus.Idle 
+      setSearchState((prev) => ({
+        ...prev,
+        results: [],
+        status: SearchStatus.Idle,
       }));
       return;
     }
@@ -62,7 +62,7 @@ function useWordPressSearch({ close }: { close: () => void }) {
         {
           params: {
             search: query,
-            per_page: 5
+            per_page: 5,
           },
         }
       );
@@ -75,7 +75,7 @@ function useWordPressSearch({ close }: { close: () => void }) {
       }));
     } catch (error) {
       console.error("Search error:", error);
-    
+
       let errorMessage: string = "An error occurred while searching";
       if (axios.isAxiosError(error)) {
         errorMessage += `: ${error.message}`;
@@ -83,12 +83,12 @@ function useWordPressSearch({ close }: { close: () => void }) {
           console.error("Response data:", error.response.data);
         }
       }
-      
-      setSearchState((prev) => ({ 
-        ...prev, 
-        status: SearchStatus.Error, 
+
+      setSearchState((prev) => ({
+        ...prev,
+        status: SearchStatus.Error,
         results: [],
-        errorMessage
+        errorMessage,
       }));
     }
   }, []);
@@ -97,11 +97,11 @@ function useWordPressSearch({ close }: { close: () => void }) {
     (event: ChangeEvent<HTMLInputElement>) => {
       const query = event.target.value;
       setSearchState((prev) => ({ ...prev, query }));
-      
+
       if (debounceTimeout.current) {
         clearTimeout(debounceTimeout.current);
       }
-      
+
       debounceTimeout.current = setTimeout(() => {
         fetchResults(query);
       }, 300);
@@ -135,7 +135,7 @@ function useWordPressSearch({ close }: { close: () => void }) {
 }
 
 function stripHtml(html: string): string {
-  return html.replace(/<[^>]*>/g, '');
+  return html.replace(/<[^>]*>/g, "");
 }
 
 function HighlightQuery({
@@ -176,11 +176,15 @@ function SearchResult({
   query: string;
   onSelect: (post: Post) => void;
 }>) {
-  const title: string = post?.title?.rendered || '';
-  const excerpt: string = post?.excerpt?.rendered || '';
+  const title: string = post?.title?.rendered || "";
+  const excerpt: string = post?.excerpt?.rendered || "";
   const excerptLength: string = excerpt.length > 100 ? "..." : "";
-  const cleanTitle: string = typeof title === 'string' ? stripHtml(convertEncode(title)) : '';
-  const cleanExcerpt: string = typeof excerpt === 'string' ? stripHtml(convertEncode(excerpt)).substring(0, 100) + (excerptLength) : '';
+  const cleanTitle: string =
+    typeof title === "string" ? stripHtml(convertEncode(title)) : "";
+  const cleanExcerpt: string =
+    typeof excerpt === "string"
+      ? stripHtml(convertEncode(excerpt)).substring(0, 100) + excerptLength
+      : "";
 
   return (
     <li
@@ -198,10 +202,7 @@ function SearchResult({
           <HighlightQuery text={cleanTitle} query={query} />
         </div>
         {post.date && (
-          <Time
-            className="mt-1 text-xs text-gray-500"
-            date={post.date}
-          >
+          <Time className="mt-1 text-xs text-gray-500" date={post.date}>
             {formatDate(post.date)}
           </Time>
         )}
@@ -265,7 +266,8 @@ function SearchResults({
           Nothing found for{" "}
           <strong className="break-words font-semibold text-gray-800 dark:text-gray-200">
             &quot;{query}&quot;
-          </strong>. Please try again.
+          </strong>
+          . Please try again.
         </p>
       </div>
     );
@@ -309,7 +311,9 @@ const SearchInput = forwardRef<
         ]}
         className="absolute left-3 top-0 h-full text-gray-700 dark:text-gray-300 mr-1.5"
       />
-      <label htmlFor="search-blog" className="sr-only">Search blog</label>
+      <label htmlFor="search-blog" className="sr-only">
+        Search blog
+      </label>
       <input
         ref={inputRef}
         id="search-blog"
@@ -367,16 +371,12 @@ function SearchDialog({
   const formRef = useRef<HTMLFormElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { 
-    searchState, 
-    handleInputChange, 
-    navigateToPost, 
-    setSearchState 
-  } = useWordPressSearch({
-    close() {
-      setOpen(false);
-    },
-  });
+  const { searchState, handleInputChange, navigateToPost, setSearchState } =
+    useWordPressSearch({
+      close() {
+        setOpen(false);
+      },
+    });
   const pathname = usePathname();
 
   useEffect(() => {
@@ -403,19 +403,19 @@ function SearchDialog({
     if (open) {
       document.documentElement.classList.add("overflow-hidden");
     }
-    
+
     return () => {
       document.documentElement.classList.remove("overflow-hidden");
-    }
+    };
   }, [open]);
 
   const handleClose = () => {
     setOpen(false);
-    setSearchState((prev) => ({ 
-      ...prev, 
-      query: "", 
+    setSearchState((prev) => ({
+      ...prev,
+      query: "",
       results: [],
-      status: SearchStatus.Idle
+      status: SearchStatus.Idle,
     }));
   };
 
@@ -427,24 +427,26 @@ function SearchDialog({
 
   if (hasError) {
     return (
-      <div className={clss(
-        open ? "block" : "hidden", 
-        "fixed inset-0 z-50", 
-        className
-      )}>
+      <div
+        className={clss(
+          open ? "block" : "hidden",
+          "fixed inset-0 z-50",
+          className
+        )}
+      >
         <button
           className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
           onClick={handleClose}
           aria-label="Close search dialog"
         />
-        
+
         <div className="fixed inset-0 z-50 overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:px-8 lg:py-[15vh]">
           <div className="mx-auto transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 sm:max-w-xl dark:bg-gray-900 dark:ring-gray-800 p-6 text-center">
             <p className="text-red-600 dark:text-red-400">
               Something went wrong. Please try again.
             </p>
-            <Button 
-              variant="default" 
+            <Button
+              variant="default"
               className="mt-4"
               onClick={() => {
                 setHasError(false);
@@ -460,11 +462,13 @@ function SearchDialog({
   }
 
   return (
-    <div className={clss(
-      open ? "block" : "hidden", 
-      "fixed inset-0 z-50", 
-      className
-    )}>
+    <div
+      className={clss(
+        open ? "block" : "hidden",
+        "fixed inset-0 z-50",
+        className
+      )}
+    >
       <button
         className="fixed inset-0 z-40 size-full backdrop-blur-sm bg-gray-400/25 dark:bg-gray-950/40"
         onClick={handleClose}
@@ -473,10 +477,7 @@ function SearchDialog({
 
       <div className="fixed inset-y-0 inset-x-1/2 -translate-x-1/2 z-50 w-[calc(100%-20%)] h-max overflow-y-auto px-4 py-4 sm:px-6 sm:py-20 md:py-32 lg:w-[calc(100%-50%)] lg:px-8 lg:py-[15vh]">
         <div className="mx-auto w-full transform-gpu overflow-hidden rounded-lg bg-gray-50 shadow-xl ring-1 ring-gray-900/7.5 dark:bg-gray-900 dark:ring-gray-800">
-          <form 
-            ref={formRef} 
-            onSubmit={(event) => event.preventDefault()}
-          >
+          <form ref={formRef} onSubmit={(event) => event.preventDefault()}>
             <SearchInput
               ref={inputRef}
               searchState={searchState}
@@ -485,7 +486,7 @@ function SearchDialog({
             />
             <div
               ref={panelRef}
-              className="border-t border-gray-200 bg-white empty:hidden dark:border-gray-100/5 dark:bg-white/2.5"
+              className="border-t border-gray-200 bg-gray-50 empty:hidden dark:border-gray-100/5 dark:bg-gray-50/2.5"
             >
               {searchState.query && (
                 <SearchResults
@@ -539,10 +540,10 @@ export function Search() {
   }, []);
 
   return (
-    <div className="block max-w-xl mx-auto my-7">
+    <div className="block max-w-md flex-auto">
       <Button
         variant="default"
-        className="flex items-center text-sm rounded-md w-full bg-gray-50 dark:bg-gray-950 px-3.5 py-3 font-normal text-gray-600 dark:text-gray-400 ring-1 ring-gray-500/20 dark:ring-gray-400/20 ring-inset"
+        className="flex font-normal h-8 w-full items-center gap-2 rounded-md bg-gray-50 pl-2 pr-3 text-sm text-zinc-500 ring-1 ring-zinc-900/10 hover:ring-zinc-900/20 ui-not-focus-visible:outline-none dark:bg-gray-50/5 dark:text-zinc-400 dark:ring-inset dark:ring-gray-50/10 dark:hover:ring-gray-50/20 lg:rounded-full"
         {...buttonProps}
       >
         <Svg
@@ -553,8 +554,8 @@ export function Search() {
             "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z",
           ]}
         />
-        <div className="flex-1 text-start ml-1.5">Search blog posts...</div>
-        <kbd className="inline-flex items-center rounded-sm space-x-1.5 border border-gray-300 dark:border-gray-700 font-mono text-xs text-gray-600 dark:text-gray-400 px-1.5 py-0.5">
+        Find post...
+        <kbd className="font-mono ml-auto text-xs text-zinc-400 dark:text-zinc-500">
           <kbd>{modifierKey}</kbd>
           <kbd>K</kbd>
         </kbd>
