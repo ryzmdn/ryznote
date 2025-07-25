@@ -58,10 +58,10 @@ export default async function Home() {
       <HeroSection />
 
       <div className="w-full my-16 space-y-16">
-        <section id="featured-posts-section">
+        <section id="featured-posts-section" className="w-full py-20 lg:py-24">
           <SectionHeader title="Featured posts" />
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 py-5 md:grid-cols-2">
-            {posts.slice(0, 4).map((post) => (
+            {posts.slice(3, 7).map((post) => (
               <BlogCard
                 key={post.id}
                 contentHtml={post.content.rendered}
@@ -77,7 +77,7 @@ export default async function Home() {
 
         <CollectionSection />
 
-        <section id="recent-posts-section">
+        <section id="recent-posts-section" className="w-full py-20 lg:py-24">
           <SectionHeader title="Recent posts" />
           <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {posts.slice(0, 6).map((post) => (

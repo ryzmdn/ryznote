@@ -63,7 +63,7 @@ export async function HeroSection() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+      <section className="grid grid-cols-1 gap-x-8 gap-y-10 py-12 sm:grid-cols-2 lg:grid-cols-3 lg:py-16">
         {posts.slice(0, 3).map((post) => (
           <UniqueCard
             key={post.id}
@@ -74,7 +74,7 @@ export async function HeroSection() {
             datetime={post.date}
           />
         ))}
-      </div>
+      </section>
     </>
   );
 }
