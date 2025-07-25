@@ -540,29 +540,24 @@ export function Search() {
   }, []);
 
   return (
-    <div className="block max-w-md flex-auto">
+    <>
       <Button
         variant="default"
-        className="flex font-normal h-8 w-full items-center gap-2 rounded-md bg-gray-50 pl-2 pr-3 text-sm text-zinc-500 ring-1 ring-zinc-900/10 hover:ring-zinc-900/20 ui-not-focus-visible:outline-none dark:bg-gray-50/5 dark:text-zinc-400 dark:ring-inset dark:ring-gray-50/10 dark:hover:ring-gray-50/20 lg:rounded-full"
+        rounded
         {...buttonProps}
       >
         <Svg
           variant="outline"
-          width={16}
-          height={16}
+          width={18}
+          height={18}
           draw={[
             "m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z",
           ]}
         />
-        Find post...
-        <kbd className="font-mono ml-auto text-xs text-zinc-400 dark:text-zinc-500">
-          <kbd>{modifierKey}</kbd>
-          <kbd>K</kbd>
-        </kbd>
       </Button>
       <Suspense fallback={null}>
         <SearchDialog {...dialogProps} />
       </Suspense>
-    </div>
+    </>
   );
 }

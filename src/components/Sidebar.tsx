@@ -85,7 +85,6 @@ export function Sidebar({
         </div>
 
         <div className="mt-6 px-2">
-          <Search />
           <div className="flex flex-col gap-y-2 py-6 divide-y divide-gray-100 dark:divide-gray-900">
             {navigation.map((item) => (
               <Button
