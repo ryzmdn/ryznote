@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import axios from "axios";
 import { Badge } from "@/components/common/Badge";
 import { Svg } from "@/components/common/Svg";
 import { SectionHeader } from "@/components/BlogSection";
 import { BlogCard } from "@/components/blog/BlogCard";
-import { Post, Term } from "@/types/wordpress";
 import { convertEncode } from "@/utils/encode";
 import { averageReadingTime } from "@/utils/readingTime";
 import { formatDate } from "@/utils/fotmatDate";
+import { Post, Term } from "@/types/wordpress";
+import picture from "@/assets/picture.webp";
+import { socialIcons } from "@/components/Icons";
+import { Button } from "@/components/common/Button";
 
 type Params = Promise<{ id: string }>;
 
@@ -21,24 +25,28 @@ export async function generateMetadata({
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?slug=${id}&_embed`,
       {
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
     const post = response.data[0];
 
-    if (!post) return {
-      title: "Post Not Found",
-      description: "The requested blog post could not be found."
-    };
+    if (!post)
+      return {
+        title: "Post Not Found",
+        description: "The requested blog post could not be found.",
+      };
 
     const title = post.title.rendered;
-    const description = post.excerpt.rendered.replace(/<[^>]*>/g, '').substring(0, 160);
-    const featuredImage = post._embedded?.['wp:featuredmedia']?.[0]?.source_url;
+    const description = post.excerpt.rendered
+      .replace(/<[^>]*>/g, "")
+      .substring(0, 160);
+    const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
     const publishedTime = post.date_gmt;
     const modifiedTime = post.modified_gmt;
-    const tags = post._embedded?.['wp:term']?.[1]?.map((tag: Term) => tag.name) || [];
-    const category = post._embedded?.['wp:term']?.[0]?.[0]?.name;
+    const tags =
+      post._embedded?.["wp:term"]?.[1]?.map((tag: Term) => tag.name) || [];
+    const category = post._embedded?.["wp:term"]?.[0]?.[0]?.name;
 
     return {
       title: convertEncode(title),
@@ -46,29 +54,29 @@ export async function generateMetadata({
       openGraph: {
         title: title,
         description: description,
-        type: 'article',
+        type: "article",
         publishedTime: publishedTime,
         modifiedTime: modifiedTime,
-        authors: post._embedded?.['author']?.map(author => author.name) || [],
+        authors: post._embedded?.["author"]?.map((author) => author.name) || [],
         tags: tags,
-        section: category
+        section: category,
       },
       twitter: {
-        card: 'summary_large_image',
+        card: "summary_large_image",
         title: title,
         description: description,
-        images: featuredImage ? [featuredImage] : []
+        images: featuredImage ? [featuredImage] : [],
       },
       keywords: tags,
       alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${id}`
-      }
+        canonical: `${process.env.NEXT_PUBLIC_SITE_URL}/blog/${id}`,
+      },
     };
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
       title: "Error Loading Post",
-      description: "There was an issue retrieving the blog post."
+      description: "There was an issue retrieving the blog post.",
     };
   }
 }
@@ -79,8 +87,8 @@ async function getPost(slug: string) {
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?slug=${slug}&_embed`,
       {
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
     return response.data[0] || null;
@@ -96,8 +104,8 @@ async function getRelatedPosts(currentPost: Post, maxPosts: number = 3) {
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`,
       {
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
     const allPosts = response.data;
@@ -135,11 +143,16 @@ export default async function Content({
   return (
     <>
       <div className="mx-auto max-w-2xl text-base text-gray-700 dark:text-gray-300 py-10">
-        <header id={`header-${post.title.rendered.replace(/ /gi, "-").toLowerCase()}`} className="w-full h-max">
+        <header
+          id={`header-${post.title.rendered.replace(/ /gi, "-").toLowerCase()}`}
+          className="w-full h-max"
+        >
           <div className="flex justify-between items-center w-full mb-6">
             <div className="flex flex-wrap items-center gap-x-2 gap-y-1.5 w-full">
               <Badge
-                href={`/blog/category/${category?.replace(/ /gi, '-').toLowerCase()}?page=1`}
+                href={`/blog/category/${category
+                  ?.replace(/ /gi, "-")
+                  .toLowerCase()}?page=1`}
                 title={`Category ${
                   category
                     ? category.charAt(0).toUpperCase() +
@@ -195,13 +208,55 @@ export default async function Content({
           className="blog-content flex flex-col gap-y-6"
         />
 
+        <div className="rounded-xl space-y-4 my-8 p-8 ring-1 ring-gray-900/10 lg:min-w-0 lg:flex-1">
+          <div className="flex items-center gap-x-5">
+            <div className="relative shrink-0 size-16 rounded-full overflow-hidden">
+              <Image
+                fill
+                src={picture}
+                alt="me"
+                className="bg-gray-100 object-cover"
+              />
+            </div>
+            <div className="w-full">
+              <h3 className="text-lg/7 font-semibold text-gray-800 dark:text-gray-200">
+                Rizky Ramadhan
+              </h3>
+              <p className="text-base/7 text-gray-600 dark:text-gray-400 font-medium">
+                Content Writer
+              </p>
+            </div>
+          </div>
+          <ul className="flex items-center gap-x-5 w-full">
+            {socialIcons.map((social) => (
+              <li key={social.name}>
+                <Button
+                  variant="ghost"
+                  href={social.href}
+                  className="text-gray-800 dark:text-gray-200"
+                  aria-label={`Follow my ${social.name}`}
+                >
+                  <Svg width={20} height={20} draw={[social.path]} />
+                </Button>
+              </li>
+            ))}
+          </ul>
+          <p className="text-sm/6 text-gray-700 dark:text-gray-300 mt-2">
+            I am Rizky Ramadhan, a content writer and programmer who is
+            passionate about sharing knowledge and experiences through writing
+            and coding.
+          </p>
+        </div>
+
         <footer className="w-full py-7">
           <h5 className="text-base/7 font-semibold">Tags</h5>
           <div className="flex flex-wrap gap-x-2 gap-y-1.5 my-2">
             {tags.map((tag) => (
               <Badge
                 key={tag}
-                href={`/blog/tag/${tag.replace(/ /gi, "-").toLowerCase()}?page=1`}
+                href={`/blog/tag/${tag
+                  .replace(/ /gi, "-")
+                  .toLowerCase()}?page=1`}
                 title={tag}
               >
                 {tag}
@@ -213,19 +268,19 @@ export default async function Content({
 
       <section id="related-posts-section" className="w-full py-16">
         <SectionHeader title="Related posts" />
-          <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {relatedPosts.map((post) => (
-              <BlogCard
-                key={post.id}
-                contentHtml={post.content.rendered}
-                title={post.title.rendered}
-                url={post.slug}
-                category={post._embedded?.["wp:term"]?.[0]?.[0].name}
-                datetime={post.date}
-                description={post.excerpt.rendered}
-              />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          {relatedPosts.map((post) => (
+            <BlogCard
+              key={post.id}
+              contentHtml={post.content.rendered}
+              title={post.title.rendered}
+              url={post.slug}
+              category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+              datetime={post.date}
+              description={post.excerpt.rendered}
+            />
+          ))}
+        </div>
       </section>
     </>
   );
