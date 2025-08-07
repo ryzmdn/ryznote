@@ -18,16 +18,16 @@ const sourceCodePro = Source_Code_Pro({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - RyzNote",
-    default: "RyzNote | Personal Blog by Rizky Ramadhan",
+    template: "%s - RyzNotes",
+    default: "RyzNotes | My Personal Blog",
   },
   description:
     "Personal blog of Rizky Ramadhan, a blogger and web developer sharing knowledge about technology, programming, and self-development.",
   generator: "Next.js",
-  applicationName: "RyzNote",
+  applicationName: "RyzNotes",
   referrer: "origin-when-cross-origin",
   keywords: [
-    "RyzNote",
+    "RyzNotes",
     "Rizky Ramadhan",
     "Blog",
     "Personal Blog",
@@ -57,11 +57,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "RyzNote | Personal Blog by Rizky Ramadhan",
+    title: "RyzNotes | My Personal Blog",
     description:
       "A personal blog by Rizky Ramadhan, covering technology, programming, and web development.",
     url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
-    siteName: "RyzNote",
+    siteName: "RyzNotes",
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/og_light.jpg`,
@@ -81,9 +81,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RyzNote | Personal Blog",
+    title: "RyzNotes | My Personal Blog",
     description:
-      "Personal blog of Rizky Ramadhan, a blogger and web developer sharing knowledge about technology, programming, and self-development.",
+      "A personal blog by Rizky Ramadhan, covering technology, programming, and web development.",
     siteId: "@ryzmdn",
     creator: "@ryzmdn",
     creatorId: "@ryzmdn",
