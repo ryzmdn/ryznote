@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/common/Button";
-import { Logo } from "@/components/Logo";
 import { Category } from "@/types/wordpress";
 import { CallToAction } from "./CallToAction";
 
@@ -53,7 +52,6 @@ export function Footer({ categories }: Readonly<{ categories: Category[] }>) {
               aria-label="Go to the home page"
               className="flex items-center gap-x-2 -m-1.5 p-1.5"
             >
-              <Logo />
               <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">
                 RyzNote
               </span>
