@@ -1,18 +1,22 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
-import { Poppins, Source_Code_Pro } from "next/font/google";
+import { Fira_Code, Merriweather, Montserrat } from "next/font/google";
 import { Provider } from "@/app/provider";
 import { clss } from "@/utils/clss";
 import "@/app/globals.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const monsterrat = Montserrat({
+  variable: "--font-monsterrat",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-const sourceCodePro = Source_Code_Pro({
-  variable: "--font-source-code-pro",
+const merriweather = Merriweather({
+  variable: "--font-merriweather",
+  subsets: ["latin"],
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",
   subsets: ["latin"],
 });
 
@@ -108,9 +112,10 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={clss(
-          poppins.className,
-          sourceCodePro.variable,
-          "antialiased h-full bg-gray-50 dark:bg-gray-950 pt-20"
+          monsterrat.className,
+          merriweather.variable,
+          firaCode.variable,
+          "antialiased w-full h-full bg-white dark:bg-black"
         )}
       >
         <Provider>{children}</Provider>

@@ -2,6 +2,11 @@
 
 @variant dark (&:where(.dark, .dark *));
 
+@theme inline {
+  --bg-white: #fefefe;
+  --bg-black: #010101;
+}
+
 @layer utilities {
   * {
     @apply transition-all duration-200 ease-linear;
