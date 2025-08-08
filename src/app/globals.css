@@ -5,6 +5,9 @@
 @theme inline {
   --bg-white: #fefefe;
   --bg-black: #010101;
+  --font-sans: "Montserrat", sans-serif;
+  --font-serif: "Merriweather", serif;
+  --font-mono: "Fira Code", monospace;
 }
 
 @layer utilities {

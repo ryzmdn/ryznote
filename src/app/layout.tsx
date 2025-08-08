@@ -6,17 +6,17 @@ import { clss } from "@/utils/clss";
 import "@/app/globals.css";
 
 const monsterrat = Montserrat({
-  variable: "--font-monsterrat",
+  variable: "--font-sans",
   subsets: ["latin"],
 });
 
 const merriweather = Merriweather({
-  variable: "--font-merriweather",
+  variable: "--font-serif",
   subsets: ["latin"],
 });
 
 const firaCode = Fira_Code({
-  variable: "--font-fira-code",
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
