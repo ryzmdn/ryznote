@@ -2,8 +2,8 @@ import axios from "axios";
 import type { Metadata } from "next";
 import { Pagination } from "@/components/ui/Pagination";
 import { Svg } from "@/components/common/Svg";
-import { BlogGrid } from "@/components/BlogSection";
 import { Post, Term } from "@/types/wordpress";
+import { BlogCard } from "@/components/ui/BlogCard";
 
 export const metadata: Metadata = {
   title: "Blog Tag",
@@ -22,9 +22,13 @@ async function getTagId(slug: string): Promise<number | null> {
     const { data } = await axios.get<Term[]>(
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/tags?slug=${formatSlug}`,
       {
+        params: {
+          per_page: 100,
+          _embed: true,
+        },
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
     return data.length > 0 ? data[0].id : null;
@@ -52,8 +56,8 @@ async function getPostsByTag(
           _embed: true,
         },
         headers: {
-          "Cache-Control": "no-store"
-        }
+          "Cache-Control": "no-store",
+        },
       }
     );
 
@@ -82,7 +86,10 @@ export default async function TopicPage({
 
   return (
     <>
-      <header id={`header-tag-${name}`} className="bg-transparent px-6 py-20 sm:py-24 lg:px-8">
+      <header
+        id={`header-tag-${name}`}
+        className="bg-transparent px-6 py-20 sm:py-24 lg:px-8"
+      >
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-4xl font-semibold tracking-tight capitalize text-gray-900 dark:text-gray-100 sm:text-5xl">
             {name.replace(/-/gi, " ")}
@@ -105,9 +112,18 @@ export default async function TopicPage({
         </div>
       </header>
 
-      <div id="tag-posts-section" className="w-full my-10">
-        <BlogGrid posts={posts} error={posts.length === 0} />
-      </div>
+      <section id="tag-posts-section" className="grid grid-cols-1 gap-x-8 gap-y-10 w-full my-10 sm:grid-cols-2">
+        {posts.map((post) => (
+          <BlogCard
+            key={post.id}
+            title={post.title.rendered}
+            url={post.slug}
+            category={post._embedded?.["wp:term"]?.[0]?.[0].name}
+            date={post.date}
+            description={post.excerpt.rendered}
+          />
+        ))}
+      </section>
 
       <Pagination
         currentPage={currentPage}
