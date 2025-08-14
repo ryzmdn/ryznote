@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import axios from "axios";
 import { Pagination } from "@/components/ui/Pagination";
-import { BlogCard } from "@/components/blog/BlogCard";
+import { BlogCard } from "@/components/ui/BlogCard";
 import { Category, Post } from "@/types/wordpress";
-import { GridLayout } from "@/components/blog/GridLayout";
 
 export const metadata: Metadata = {
   title: "Blogs",
@@ -92,23 +91,20 @@ export default async function CategoryPage({
 
   return (
     <>
-      <GridLayout content={posts} />
-      
-      <div id="category-posts-section" className="w-full my-10 py-16">
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-y-16">
+      <section id="category-posts-section" className="w-full my-10 py-16">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:gap-y-16">
           {posts.slice(3, 12).map((post) => (
             <BlogCard
               key={post.id}
-              contentHtml={post.content.rendered}
               title={post.title.rendered}
               url={post.slug}
               category={post._embedded?.["wp:term"]?.[0]?.[0].name}
-              datetime={post.date}
+              date={post.date}
               description={post.excerpt.rendered}
             />
           ))}
         </div>
-      </div>
+      </section>
 
       <Pagination
         currentPage={currentPage}
