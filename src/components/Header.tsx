@@ -16,7 +16,6 @@ interface Navigation {
 
 const navigation: Navigation[] = [
   { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
   { name: "Posts", href: "/blog/category/all?page=1" },
   { name: "Collections", href: "/collections" },
 ];
