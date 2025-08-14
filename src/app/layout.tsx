@@ -1,33 +1,37 @@
 import { ReactNode } from "react";
 import type { Metadata } from "next";
-import { Poppins, Source_Code_Pro } from "next/font/google";
+import { Fira_Code, Merriweather, Montserrat } from "next/font/google";
 import { Provider } from "@/app/provider";
 import { clss } from "@/utils/clss";
 import "@/app/globals.css";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const monsterrat = Montserrat({
+  variable: "--font-sans",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-const sourceCodePro = Source_Code_Pro({
-  variable: "--font-source-code-pro",
+const merriweather = Merriweather({
+  variable: "--font-serif",
+  subsets: ["latin"],
+});
+
+const firaCode = Fira_Code({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - RyzNote",
-    default: "RyzNote | Personal Blog by Rizky Ramadhan",
+    template: "%s - RyzNotes",
+    default: "RyzNotes | My Personal Blog",
   },
   description:
     "Personal blog of Rizky Ramadhan, a blogger and web developer sharing knowledge about technology, programming, and self-development.",
   generator: "Next.js",
-  applicationName: "RyzNote",
+  applicationName: "RyzNotes",
   referrer: "origin-when-cross-origin",
   keywords: [
-    "RyzNote",
+    "RyzNotes",
     "Rizky Ramadhan",
     "Blog",
     "Personal Blog",
@@ -57,11 +61,11 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "RyzNote | Personal Blog by Rizky Ramadhan",
+    title: "RyzNotes | My Personal Blog",
     description:
       "A personal blog by Rizky Ramadhan, covering technology, programming, and web development.",
     url: `${process.env.NEXT_PUBLIC_SITE_URL}`,
-    siteName: "RyzNote",
+    siteName: "RyzNotes",
     images: [
       {
         url: `${process.env.NEXT_PUBLIC_SITE_URL}/og_light.jpg`,
@@ -81,9 +85,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "RyzNote | Personal Blog",
+    title: "RyzNotes | My Personal Blog",
     description:
-      "Personal blog of Rizky Ramadhan, a blogger and web developer sharing knowledge about technology, programming, and self-development.",
+      "A personal blog by Rizky Ramadhan, covering technology, programming, and web development.",
     siteId: "@ryzmdn",
     creator: "@ryzmdn",
     creatorId: "@ryzmdn",
@@ -108,9 +112,10 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <body
         className={clss(
-          poppins.className,
-          sourceCodePro.variable,
-          "antialiased h-full bg-gray-50 dark:bg-gray-950 pt-20"
+          monsterrat.className,
+          merriweather.variable,
+          firaCode.variable,
+          "antialiased w-full h-full bg-white dark:bg-black"
         )}
       >
         <Provider>{children}</Provider>

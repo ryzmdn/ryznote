@@ -4,9 +4,9 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/common/Button";
 import { Svg } from "@/components/common/Svg";
-import { Logo } from "@/components/Logo";
-import { Search } from "@/components/Search";
+import Logo from "@/assets/logo.webp";
 import { clss } from "@/utils/clss";
+import Image from "next/image";
 
 interface SidebarProps {
   opened: boolean;
@@ -64,7 +64,9 @@ export function Sidebar({
             aria-label="Go to the home page"
             className="flex items-center gap-x-2 -m-1.5 p-1.5"
           >
-            <Logo />
+            <div className="relative size-6">
+              <Image src={Logo} alt="Primary logo" fill />
+            </div>
             <span className="text-xl font-semibold text-gray-950 dark:text-gray-50">
               RyzNote
             </span>

@@ -14,6 +14,10 @@ async function getPosts(): Promise<Category[]> {
     const response = await axios.get<Category[]>(
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/categories`,
       {
+        params: {
+          per_page: 100,
+          _embed: true,
+        },
         headers: {
           "Cache-Control": "no-store",
         },
@@ -39,7 +43,7 @@ export default async function Collections() {
 
   return (
     <>
-      <div className="bg-transparent w-full pt-10 pb-5">
+      <div className="bg-transparent w-full py-20">
         <div className="text-center mx-auto max-w-2xl">
           <h2 className="text-4xl font-semibold tracking-tight text-gray-900 dark:text-gray-100 sm:text-6xl">
             Posts by Collection
@@ -52,9 +56,9 @@ export default async function Collections() {
         </div>
       </div>
 
-      <div className="w-full pt-14 pb-24">
+      <div className="w-full py-16">
         {mappedPosts.length > 0 ? (
-          <ul className="mt-3 grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
+          <ul className="grid grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {mappedPosts
               .toSorted((a, b) => b.postCount - a.postCount)
               .map((post) => (
@@ -63,7 +67,7 @@ export default async function Collections() {
                   id={`collection-${post.name
                     .replace(/ /gi, "-")
                     .toLowerCase()}`}
-                  className="group col-span-1 flex rounded-xl bg-gray-100 ring-1 ring-gray-200 dark:ring-gray-800"
+                  className="group col-span-1 flex rounded-xl bg-gray-100 hover:bg-gray-200 dark:bg-gray-900 dark:hover:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-800"
                 >
                   <Button
                     variant="default"
