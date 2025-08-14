@@ -5,7 +5,7 @@ import axios from "axios";
 import { Badge } from "@/components/common/Badge";
 import { Svg } from "@/components/common/Svg";
 import { SectionHeader } from "@/components/BlogSection";
-import { BlogCard } from "@/components/blog/BlogCard";
+import { BlogCard } from "@/components/ui/BlogCard";
 import { convertEncode } from "@/utils/encode";
 import { averageReadingTime } from "@/utils/readingTime";
 import { formatDate } from "@/utils/fotmatDate";
@@ -98,7 +98,7 @@ async function getPost(slug: string) {
   }
 }
 
-async function getRelatedPosts(currentPost: Post, maxPosts: number = 3) {
+async function getRelatedPosts(currentPost: Post, maxPosts: number = 4) {
   try {
     const response = await axios.get<Post[]>(
       `${process.env.NEXT_PUBLIC_WORDPRESS_API}/posts?_embed`,
@@ -142,7 +142,7 @@ export default async function Content({
 
   return (
     <>
-      <div className="mx-auto max-w-2xl text-base text-gray-700 dark:text-gray-300 py-10">
+      <div className="mx-auto max-w-4xl text-base text-gray-700 dark:text-gray-300 py-10">
         <header
           id={`header-${post.title.rendered.replace(/ /gi, "-").toLowerCase()}`}
           className="w-full h-max"
@@ -205,10 +205,10 @@ export default async function Content({
           dangerouslySetInnerHTML={{
             __html: convertEncode(post.content.rendered),
           }}
-          className="blog-content flex flex-col gap-y-6"
+          className="blog-content flex flex-col gap-y-6 font-serif"
         />
 
-        <div className="rounded-xl space-y-4 my-8 p-8 ring-1 ring-gray-900/10 lg:min-w-0 lg:flex-1">
+        <div className="rounded-xl space-y-4 my-8 p-8 ring-1 ring-gray-900/10 dark:ring-gray-100/10 lg:min-w-0 lg:flex-1">
           <div className="flex items-center gap-x-5">
             <div className="relative shrink-0 size-16 rounded-full overflow-hidden">
               <Image
@@ -268,15 +268,14 @@ export default async function Content({
 
       <section id="related-posts-section" className="w-full py-16">
         <SectionHeader title="Related posts" />
-        <div className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2">
           {relatedPosts.map((post) => (
             <BlogCard
               key={post.id}
-              contentHtml={post.content.rendered}
               title={post.title.rendered}
               url={post.slug}
               category={post._embedded?.["wp:term"]?.[0]?.[0].name}
-              datetime={post.date}
+              date={post.date}
               description={post.excerpt.rendered}
             />
           ))}
